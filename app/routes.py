@@ -605,7 +605,7 @@ def create_newsletter():
             return response,400
 #hcprofs status == Active, sort by published_date      
 @app.route('/newsletter_panel', methods = ['GET'])
-def update_newsletter(n_id):
+def view_newsletter():
     if request.method == 'GET':
         response = Newsletter.activelist_newsletter()
         return response,200
