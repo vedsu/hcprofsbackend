@@ -603,9 +603,18 @@ def create_newsletter():
             return response,201
         else:
             return response,400
-        
+#hcprofs status == Active, sort by published_date      
+@app.route('/newsletter_panel', methods = ['GET'])
+def update_newsletter(n_id):
+    if request.method == 'GET':
+        response = Newsletter.activelist_newsletter()
+        return response,200
+
+#masterdata backend
 @app.route('/newsletter_panel/<n_id>', methods = ['GET','POST'])
 def update_newsletter(n_id):
+   
+        
     if request.method == 'POST':
         newsletter_status = request.json.get("status")
         response = Newsletter.edit_newsletter(n_id, newsletter_status)
