@@ -29,8 +29,8 @@ class Order():
             user_data = list(mongo.db.user_data.find({"email": customeremail}))
             if user_data:
                 user = user_data[0]
-                history_pending = user.get("newsletter_purchased") 
-                history_purchased = user.get("newsletter_pending")
+                newsletter_purchased = user.get("newsletter_purchased") 
+                newsletter_pending = user.get("newsletter_pending")
                 
                 
                 for order in orders:
@@ -44,19 +44,23 @@ class Order():
 
                     if paymentstatus == "purchased":
                         projection ={"_id":0}
-                        newsletter_data  = list(mongo.db.webinar_data.find_one({"topic":topic}, projection))
+                        newsletter_data  = list(mongo.db.newsletter_data.find_one({"topic":topic}, projection))
                         if newsletter_data:
                             webinar = newsletter_data
                             # print("YES")
                             
-                            topic = webinar.get("topic")
+                            topic = webinar.get("topic"),
+                            published_date = webinar.get("published_date),
+                            newsletter_doc = webinar.get("document")
                             
                             
                             
                             dashboard_dict = {
                             "customername":customername ,
                             "newsletter" : topic,
-                            "document" : document
+                            "document" : document,
+                            "published_date":published_date,
+                            "newsletter_doc":newsletter_doc    
                             }
 
                             dashboard_list.append(dashboard_dict)
@@ -66,7 +70,7 @@ class Order():
 
                 dashboard_list=[str(e)]
 
-        return dashboard_list, history_pending, history_purchased
+        return dashboard_list, newsletter_purchased, newsletter_pending
     @staticmethod
     def find_order(customeremail):
 
