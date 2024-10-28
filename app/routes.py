@@ -648,7 +648,9 @@ def view_newsletter():
 #masterdata backend
 @app.route('/newsletter_panel/<n_id>', methods = ['GET','POST'])
 def update_newsletter(n_id):
-   
+    if request.method == 'GET':
+        newsletter_info = view_newsletter(n_id)
+        return newsletter_info
         
     if request.method == 'POST':
         newsletter_status = request.json.get("status")
