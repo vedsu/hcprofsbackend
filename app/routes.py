@@ -23,7 +23,42 @@ load_dotenv()
 stripe.api_key = os.environ.get("stripe_secret_key")
 
 # webinar
+@app.route('/create-payment-intent', methods=['POST'])
+def create_payment_intent():
+    
+    data = request.json
+    
+    try:
+        customer = stripe.Customer.create(
+            email = data['email'],
+            
+            name = data['name'],
+            address={
+                'line1': "Address",
+                'city': "City",
+                'state': "State",
+                'country': data['country'],
+                'postal_code': 444444
+            },
+            source = data['stripeToken']
+        )
 
+        charge = stripe.Charge.create(
+            customer=customer.id,
+            amount = data['amount']*100,
+            currency='inr',
+            description='Stripe Charge'
+        )
+        created_time = datetime.datetime.fromtimestamp(customer['created']).astimezone()
+        return jsonify({'success': True, 'amount': data['amount'], 'date_time':created_time})
+        
+      
+    except stripe.error.CardError as e:
+        return jsonify({'success': False, 'error': str(e) })
+    except stripe.error.StripeError as e:
+        return jsonify({'success': False, 'error': str(e) })
+    except Exception as e:
+        return jsonify(error=str(e)), 403
 @app.route('/')
 def home():
     response = Utility.update_live_status()
