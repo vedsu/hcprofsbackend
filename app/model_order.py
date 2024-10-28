@@ -50,7 +50,7 @@ class Order():
                             # print("YES")
                             
                             topic = webinar.get("topic"),
-                            published_date = webinar.get("published_date),
+                            published_date = webinar.get("published_date"),
                             newsletter_doc = webinar.get("document")
                             
                             
