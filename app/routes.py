@@ -649,7 +649,7 @@ def view_newsletter():
 @app.route('/newsletter_panel/<n_id>', methods = ['GET','POST'])
 def update_newsletter(n_id):
     if request.method == 'GET':
-        newsletter_info = view_newsletter(n_id)
+        newsletter_info = Newsletter.view_newsletter(n_id)
         return newsletter_info
         
     if request.method == 'POST':
