@@ -12,7 +12,7 @@ class Newsletter():
     def list_newsletter():
         newsletter_list = []
         try:
-            newsletter_data = list(mongo.db.newsletter_data.find({}).sort({"topic":1}))
+            newsletter_data = list(mongo.db.newsletter_data.find({}).sort({"published_at":1}))
             for newsletter in newsletter_data:
                 newsletter_dict ={
                     "id":newsletter.get("id"),
@@ -23,6 +23,7 @@ class Newsletter():
                     "price":newsletter.get("price"),
                     "thumbnail":newsletter.get("thumbnail"),
                     "document":newsletter.get("document"),
+                    "published_at": newsletter.get("published_at")
 
                 }
                 newsletter_list.append(newsletter_dict)
@@ -48,7 +49,7 @@ class Newsletter():
     def activelist_newsletter():
         newsletter_list = []
         try:
-            newsletter_data = list(mongo.db.newsletter_data.find({"status":"Active"}).sort({"topic":1}))
+            newsletter_data = list(mongo.db.newsletter_data.find({"status":"Active"}).sort({"published_at":1}))
             for newsletter in newsletter_data:
                 newsletter_dict ={
                     "id":newsletter.get("id"),
@@ -59,6 +60,7 @@ class Newsletter():
                     "price":newsletter.get("price"),
                     "thumbnail":newsletter.get("thumbnail"),
                     "document":newsletter.get("document"),
+                    "published_at": newsletter.get("published_at")
 
                 }
                 newsletter_list.append(newsletter_dict)
@@ -68,9 +70,33 @@ class Newsletter():
         
 
     @staticmethod
+    def view_newsletter(n_id):
+        newsletter_info = None
+        try:
+            newsletter_data = list(mongo.db.newsletter_data.find({"id":n_id}))
+            newsletter = newsletter_data[0]
+            newsletter_dict ={
+                    "id":newsletter.get("id"),
+                    "topic":newsletter.get("topic"),
+                    "category":newsletter.get("category"),
+                    "description":newsletter.get("description"),
+                    "website":newsletter.get("website"),
+                    "price":newsletter.get("price"),
+                    "thumbnail":newsletter.get("thumbnail"),
+                    "document":newsletter.get("document"),
+                    "published_at": newsletter.get("published_at")
+
+                }
+            
+            newsletter_info = newsletter_dict
+            
+        except:
+            newsletter_info = None
+        return newsletter_info
+    @staticmethod
     def edit_newsletter(n_id,newsletter_status):
         try:
-            mongo.db.newsletter_data.update_one({"n_id":n_id},{"$set": {"status": newsletter_status}})
+            mongo.db.newsletter_data.update_one({"id":n_id},{"$set": {"status": newsletter_status}})
             return {"success":True, "message":"status update successfull"}
         
         except Exception as e:
