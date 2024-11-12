@@ -64,10 +64,11 @@ def home():
     response = Utility.update_live_status()
     speaker_list = []
     webinar_list = []
+    coupon_list = Utility.view_coupon()
     webinar_list = Webinar.view_webinar()
     speaker_list  = Speaker.view_speaker()
     
-    return jsonify(webinar_list, speaker_list),200
+    return jsonify(webinar_list, speaker_list, coupon_list),200
 
 @app.route('/<w_id>', methods= ['GET'])
 def view_webinar(w_id):    
