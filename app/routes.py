@@ -106,6 +106,7 @@ def user_register():
         register_name = request.form.get("Name")
         register_email = request.form.get("Email")
         register_role = request.form.get("Role")
+        register_number = request.form.get("Contact")
         register_password = request.form.get("Password")
         # register_confirmpassword = request.form.get("ConfirmPassword")
         register_type = request.form.get("UserType")
