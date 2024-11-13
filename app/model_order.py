@@ -44,7 +44,7 @@ class Order():
 
                     if paymentstatus == "purchased":
                         projection ={"_id":0}
-                        newsletter_data  = list(mongo.db.newsletter_data.find_one({"topic":topic}, projection))
+                        newsletter_data  = list(mongo.db.newsletter_data.find({"topic":topic}, projection))
                         if newsletter_data:
                             webinar = newsletter_data
                             # print("YES")
