@@ -46,20 +46,20 @@ class Order():
                         projection ={"_id":0}
                         newsletter_data  = list(mongo.db.newsletter_data.find({"topic":topic}, projection))
                         if newsletter_data:
-                            webinar = newsletter_data[0]
+                            newsletter = newsletter_data[0]
                             # print("YES")
                             
-                            topic = webinar.get("topic"),
-                            published_date = webinar.get("published_date"),
-                            newsletter_doc = webinar.get("document")
+                            topic = newsletter.get("topic"),
+                            published_date = newsletter.get("published_date"),
+                            newsletter_doc = newsletter.get("document")
                             
                             
                             
                             dashboard_dict = {
-                            "customername":customername ,
-                            "newsletter" : topic,
+                            
+                            "newsletter" : topic[0],
                             "document" : document,
-                            "published_date":published_date,
+                            "published_date":published_date[0],
                             "newsletter_doc":newsletter_doc    
                             }
 
