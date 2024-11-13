@@ -66,7 +66,7 @@ class Speaker():
         try:
             
             speaker = list(mongo.db.speaker_data.find_one({"email":email}))
-            
+            speaker = speaker_data[0]
             history =  speaker.get("history")
             name = speaker.get("name")
             
