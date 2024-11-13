@@ -185,7 +185,7 @@ def handle_othertimezone(webinar_datetime_str,timeZone):
         time_difference = webinar_datetime_utc - current_datetime_utc
 
         # Check if the webinar is within the next 24 hours
-        is_more_than_24_hours = timedelta(24) < time_difference < timedelta(hours=1440)
+        is_more_than_24_hours = timedelta(hours=24)) < time_difference < timedelta(hours=1440)
 
         return is_more_than_24_hours
           
@@ -227,6 +227,6 @@ def handle_timezone(webinar_datetime_str,timeZone):
         time_difference = webinar_datetime_utc - current_datetime_utc
 
         # Check if the webinar is within the next 24 hours
-        is_within_next_24_hours = timedelta(0) < time_difference < timedelta(hours=24)
+        is_within_next_24_hours = timedelta(hours=0) < time_difference < timedelta(hours=24)
 
         return is_within_next_24_hours
