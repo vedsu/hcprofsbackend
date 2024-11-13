@@ -119,11 +119,14 @@ class Order():
                             
                             if sessionLive == "true" and handle_live:
                                 live_url =  urlLive
-                            if sessionRecording == "true" and handle_other:
+                            if sessionRecording == "true":
+                                # if sessionRecording == "true" and handle_other:
                                 recording_url = urlRecording
-                            if sessionDigitalDownload == "true" and handle_other:
+                            if sessionDigitalDownload == "true":
+                                # if sessionDigitalDownload == "true" and handle_other:
                                 digitaldownload_url = urlDigitalDownload
-                            if sessionTranscript == "true" and handle_other:
+                            if sessionTranscript == "true":
+                            # if sessionTranscript == "true" and handle_other:
                                 transcript_url = urlTranscript
                             
                             dashboard_dict = {
@@ -185,7 +188,7 @@ def handle_othertimezone(webinar_datetime_str,timeZone):
         time_difference = webinar_datetime_utc - current_datetime_utc
 
         # Check if the webinar is within the next 24 hours
-        is_more_than_24_hours = timedelta(hours=24)) < time_difference < timedelta(hours=1440)
+        is_more_than_24_hours = timedelta(hours=24) < time_difference < timedelta(hours=1440)
 
         return is_more_than_24_hours
           
