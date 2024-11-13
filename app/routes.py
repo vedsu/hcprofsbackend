@@ -475,11 +475,28 @@ def newsletter_order():
                 
                 order_datetimezone = request.form.get("order_datetimezone")
                 date_time_str = order_datetimezone
-                
-                # Define the format of your date-time string
-                date_time_format = "%a, %d %b %Y %H:%M:%S %Z"
-                # Parse the date-time string into a datetime object
-                date_time_obj = datetime.datetime.strptime(date_time_str, date_time_format)
+                try:
+                    # Define the format of your date-time string
+                    date_time_format = "%a, %d %b %Y %H:%M:%S %Z"
+                    # Parse the date-time string into a datetime object
+                    date_time_obj = datetime.datetime.strptime(date_time_str, date_time_format)
+                    # orderdate =  date_time_obj.date()
+                    # ordertime = date_time_obj.time()
+                    # ordertimezone = pytz.timezone('GMT')
+                except:
+                    # Date string from frontend
+                    date_time_format = "Fri Nov 08 2024 16:53:18 GMT+0530 (India Standard Time)"
+                    # Remove the `GMT` and timezone name from the string
+                    date_str = date_time_str.replace("GMT", "").split(" (")[0]
+                    # Parse the date string to datetime object
+                    date_time_obj = datetime.datetime.strptime(date_str, '%a %b %d %Y %H:%M:%S %z')
+                    # Convert to ISO 8601 format (YYYY-MM-DDTHH:MM:SS.sss+00:00)
+                    iso_format_date = date_time_obj.isoformat()
+                    # orderdate =  date_time_obj.date()
+                    # ordertime = date_time_obj.time()
+                    # ordertimezone = pytz.timezone('GMT')
+                    
+                    
                 orderdate =  date_time_obj.date()
                 ordertime = date_time_obj.time()
                 ordertimezone = pytz.timezone('GMT')
