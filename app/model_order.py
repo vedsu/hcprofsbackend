@@ -119,7 +119,7 @@ class Order():
                             
                             if sessionLive == "true" and handle_live:
                                 live_url =  urlLive
-                            if sessionRecording == True and handle_other:
+                            if sessionRecording == "true" and handle_other:
                                 recording_url = urlRecording
                             if sessionDigitalDownload == "true" and handle_other:
                                 digitaldownload_url = urlDigitalDownload
