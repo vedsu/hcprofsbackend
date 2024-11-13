@@ -117,13 +117,13 @@ class Order():
                             handle_live = handle_timezone(date_time, timeZone)
                             handle_other = handle_othertimezone(date_time, timeZone)
                             
-                            if sessionLive == "True" and handle_live:
+                            if sessionLive == "true" and handle_live:
                                 live_url =  urlLive
-                            if sessionRecording == "True" and handle_other:
+                            if sessionRecording == True and handle_other:
                                 recording_url = urlRecording
-                            if sessionDigitalDownload == "True" and handle_other:
+                            if sessionDigitalDownload == "true" and handle_other:
                                 digitaldownload_url = urlDigitalDownload
-                            if sessionTranscript == "True" and handle_other:
+                            if sessionTranscript == "true" and handle_other:
                                 transcript_url = urlTranscript
                             
                             dashboard_dict = {
