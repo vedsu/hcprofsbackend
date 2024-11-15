@@ -65,9 +65,10 @@ class Speaker():
         dashboard_list = [] 
         history = []
         try:
-            
+            return dashboard_list,history
             speaker_data = list(mongo.db.speaker_data.find({"email":email}))
-            return speaker_data, history
+            # speaker_data = list(mongo.db.speaker_data.find({"email":email}))
+            # return speaker_data, history
             speaker = speaker_data[0]
             history =  speaker.get("history")
             name = speaker.get("name")
