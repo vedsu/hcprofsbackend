@@ -274,6 +274,196 @@ def get_current_time_ist():
 
 
 # orders
+@app.route('/corportateorder', methods = ['POST'])
+def corporateorder():
+    try: 
+        paymentstatus = None
+        current_time_ist = None
+        invoice_number = None
+        country = None
+        customername = None
+        billingemail = None
+        attendees = None
+        total_attendee = 0
+        session = []
+        
+        response_confirmationmail = {"success":False,"message":"Order Not Placed"}
+        # Get the current time in UTC
+        now_utc = datetime.datetime.now(pytz.utc)
+        orderdate =  now_utc.date()
+        ordertime =  now_utc.time()
+        ordertimezone = now_utc.tzinfo
+        
+        id = len(list(mongo.db.order_data.find({})))+1
+        if request.method in 'POST':
+            
+            customeremail = request.form.get('customeremail')
+            paymentstatus = request.form.get("paymentstatus")
+            website = request.form.get("website")
+            Webinar = request.form.get("topic")
+            orderamount =  request.form.get("orderamount")
+            webinardate = request.form.get("webinardate")
+            
+    
+            sessionLive =  request.form.get("sessionLive") #True /False
+            priceLive = request.form.get('priceLive')
+            quantityLive = request.form.get('quantityLive') # Default 0
+            if sessionLive == "true":
+                session.append({"Live": priceLive})
+            
+            sessionRecording = request.form.get("sessionRecording") # True/ False
+            priceRecording = request.form.get('priceRecording')
+            quantityRecording = request.form.get('quantityRecording') # Default 0
+            
+            
+            if sessionRecording == "true":
+                session.append({"Recording": priceRecording})
+            
+            sessionDigitalDownload = request.form.get('sessionDigitalDownload') # True or False
+            priceDigitalDownload =  request.form.get('priceDigitalDownload')
+            quantityDigitalDownload = request.form.get('quantityDigitalDownload') # Default 0
+            
+            if sessionDigitalDownload == "true":
+                session.append({"DigitalDownload": priceDigitalDownload})
+            
+            sessionTranscript = request.form.get("sessionTranscript") # True or False
+            priceTranscript = request.form.get('priceTranscript')
+            quantityTranscript = request.form.get('quantityTranscript') # Default 0
+            
+            if sessionTranscript == "true":
+                session.append({"Transcript":priceTranscript})
+            
+            # Extract keys and store them as a comma-separated string
+            keys = [list(item.keys())[0] for item in session]
+            comma_separated_keys = ', '.join(keys)
+            
+            if paymentstatus == "purchased":
+                billingemail = request.form.get("billingemail")
+                customername = request.form.get("customername")
+                country =  request.form.get("country")
+                attendees = request.form.get("attendees") #for corporate purchase
+                total_attendee = request.form.get("total_attendee") # for corporate purchase that is sum of quantity of all webinars quantity
+                
+                order_datetimezone = request.form.get("order_datetimezone")
+                date_time_str = order_datetimezone
+                
+                # Define the format of your date-time string
+                date_time_format = "%a, %d %b %Y %H:%M:%S %Z"
+                # Parse the date-time string into a datetime object
+                date_time_obj = datetime.datetime.strptime(date_time_str, date_time_format)
+                orderdate =  date_time_obj.date()
+                ordertime = date_time_obj.time()
+                ordertimezone = pytz.timezone('GMT')
+                invoice_number = request.form.get("invoice_number")
+                
+                #website name
+                website=="HEALTHPROFS"
+                websiteUrl = "https://hcprofs.com/"
+                current_time_ist = get_current_time_ist()
+                
+    
+                document = Utility.generate_pdf(Webinar, customername, country, websiteUrl, billingemail, date_time_str, orderamount, invoice_number)
+            
+            else:
+                
+                document = ""
+            
+            order_data = {
+                "id":id,
+                "topic": Webinar,
+                "customeremail":  customeremail, # Login email
+                "paymentstatus": paymentstatus,
+                "orderdate": str(orderdate),
+                "ordertime": str(ordertime),
+                "ordertimezone" : str(ordertimezone),
+                
+                "webinardate": webinardate,
+                "session": session,# Array
+                "sessionLive": request.form.get("sessionLive"), #True /False
+                "priceLive": request.form.get('priceLive'),
+                "quantityLive": request.form.get('quantityLive'), #for corporate purchase
+                
+                "sessionRecording":request.form.get("sessionRecording"), # True/ False
+                "priceRecording": request.form.get('priceRecording'),
+                "quantityRecording": request.form.get('quantityRecording'),#for corporate purchase
+                
+                "sessionDigitalDownload":request.form.get('sessionDigitalDownload'), # True or False
+                "priceDigitalDownload": request.form.get('priceDigitalDownload'),
+                "quantityDigitalDownload": request.form.get('quantityDigitalDownload'),#for corporate purchase
+                
+                "sessionTranscript":request.form.get("sessionTranscript"), # True or False
+                "priceTranscript": request.form.get('priceTranscript'),
+                "quantityTranscript": request.form.get('quantityTranscript'),#for corporate purchase
+                "attendees" : attendees,
+                "customername": customername,
+                "billingemail": billingemail,
+                "orderamount": orderamount,
+                "country": country,
+                "website": website , # Current Website
+                "document" : document,
+                "ist_time" : current_time_ist,
+                "invoice_number" : invoice_number,
+                }
+            
+    
+            response_order, response_user = Order.update_order(order_data), Login.user_order(customeremail, paymentstatus, Webinar) 
+            if paymentstatus == "purchased":
+                
+                
+                try:
+                    msg = Message('Order Confirmation and Thank You',
+                        sender='cs@hcprofs.com',
+                        recipients=[billingemail],
+                        bcc=['fulfillmentteam@aol.com'])
+    
+                    msg.body = f"""
+                    Dear Customer,
+    
+                    Thank you for your order!
+    
+                    Here are your Order Details:
+                    Webinar Name: {Webinar}
+                    Order Amount: {orderamount}
+                    Session: {comma_separated_keys}
+                    Participants: {total_attendee}
+                    Invoice: {document}
+                    Website: {websiteUrl}
+    
+    
+                    We appreciate your business and look forward to seeing you at the webinar.
+    
+                    Thanks & Regards!
+                    Fullfillment Team
+                    """
+    
+                    msg.html = render_template_string("""
+                    <p>Dear Customer,</p>
+                    <p>Thank you for your order!</p>
+                    <p><b>Here are your Order Details:</b></p>
+                    <ul>
+                        <li><b>Webinar Name:</b> {{ webinar_name }}</li>
+                        <li><b>Order Amount:</b> {{ order_amount }}</li>
+                        <li><b>Session:</b> {{ session }}</li>
+                        <li><b>Participants:</b> {{ total_attendee }}</li>
+                        <li><b>Invoice:</b> <a href="{{ s3_link }}">{{ s3_link }}</a></li>
+                        <li><b>Website:</b> <a href="{{ website_url }}">{{ website_url }}</a></li>
+                    </ul>
+                    <p>We appreciate your business and look forward to seeing you at the webinar.</p>
+                    <p>Thanks & Regards!<br>Fullfillment Team</p>
+                    """, webinar_name=Webinar, s3_link=document, session=comma_separated_keys, total_attendee= total_attendee, order_amount=orderamount, website_url=websiteUrl)
+    
+                    mail.send(msg)
+                    response_confirmationmail = {"success":True, "message":"Confimation mail delivered"}
+                
+                except Exception as e:
+                    response_confirmationmail = {"success":False,"message":str(e)}
+            
+            
+            return jsonify(response_order, response_user, response_confirmationmail)
+    
+    except Exception as e:
+            return jsonify({"error": str(e)}), 500
+# orders
 @app.route('/order', methods = ['POST'])
 def order():
     try: 
