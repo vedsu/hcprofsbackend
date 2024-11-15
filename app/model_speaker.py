@@ -63,6 +63,7 @@ class Speaker():
     def speakerdashboard_data(email):
         
         dashboard_list = [] 
+        history = []
         try:
             
             speaker = list(mongo.db.speaker_data.find({"email":email}))
