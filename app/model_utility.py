@@ -100,15 +100,15 @@ class Utility():
         y_shift = 40  # Shift content down by 40 units
 
         # Document Title at the top
-        pdf.setFont('Helvetica-Bold', 20)
+        pdf.setFont('Helvetica-Bold', 18)
         pdf.drawCentredString(width / 2, height - 40 - y_shift, documentTitle)
 
         # Create the title by setting its font and putting it on the canvas
-        pdf.setFont('Helvetica-Bold', 16)
+        pdf.setFont('Helvetica-Bold', 14)
         pdf.drawCentredString(width / 2, height - 80 - y_shift, title)
 
         # First section - Invoice details
-        pdf.setFont("Helvetica-Bold", 14)
+        pdf.setFont("Helvetica-Bold", 10)
         text = pdf.beginText(40, height - 120 - y_shift)
         for line in leftSection:
             text.textLine(line)
@@ -124,7 +124,7 @@ class Utility():
 
         # Second section - Customer details
         text = pdf.beginText(40, height - 180 - y_shift)
-        text.setFont("Helvetica-Bold", 14)
+        text.setFont("Helvetica-Bold", 10)
         text.textLine(customerDetails[0])  # Customer Details heading
         text.setFont("Helvetica", 14)  # Change font for the rest of the text
         text.moveCursor(0, 20)  # Add space after the heading
@@ -139,19 +139,19 @@ class Utility():
 
         # Third section - Webinar details
         text = pdf.beginText(40, height - 360 - y_shift)
-        text.setFont("Helvetica-Bold", 14)
+        text.setFont("Helvetica-Bold", 10)
         for line in webinarDetails:
             text.textLine(line)
         pdf.drawText(text)
 
         # Add the thank you note and signature at the bottom of the page
-        pdf.setFont("Helvetica-Oblique", 12)
+        pdf.setFont("Helvetica-Oblique", 8)
         pdf.setFillColor(colors.black)
         pdf.drawCentredString(width / 2, 80, thankYouNote)
         pdf.drawCentredString(width / 2, 60, signature)
         
         # Add the website URL at the bottom-most position
-        pdf.setFont("Helvetica", 12)
+        pdf.setFont("Helvetica", 8)
         pdf.drawCentredString(width / 2, 40, f'Website - {websiteUrl}')
 
         # Save the PDF to the in-memory buffer
