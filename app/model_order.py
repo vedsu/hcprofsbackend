@@ -5,6 +5,15 @@ import pytz
 class Order():
 
     @staticmethod
+    def update_corporateorder(order_data):
+
+        try:
+            mongo.db.corporate_order.insert_one(order_data)
+            return ({"success": True, "message": "order placed successfully"}),201
+        except Exception as e:
+            return ({"success": False, "message": str(e)}), 403
+    
+    @staticmethod
     def update_order(order_data):
 
         try:
