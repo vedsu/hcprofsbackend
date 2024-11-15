@@ -294,7 +294,7 @@ def corporateorder():
         ordertime =  now_utc.time()
         ordertimezone = now_utc.tzinfo
         
-        id = len(list(mongo.db.order_data.find({})))+1
+        id = len(list(mongo.db.corporate_order.find({})))+1
         if request.method in 'POST':
             
             customeremail = request.form.get('customeremail')
@@ -406,7 +406,7 @@ def corporateorder():
                 }
             
     
-            response_order, response_user = Order.update_order(order_data), Login.user_order(customeremail, paymentstatus, Webinar) 
+            response_order, response_user = Order.update_corporateorder(order_data), Login.user_order(customeremail, paymentstatus, Webinar) 
             if paymentstatus == "purchased":
                 
                 
