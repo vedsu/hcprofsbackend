@@ -309,7 +309,7 @@ def corporateorder():
             priceLive = request.form.get('priceLive')
             quantityLive = request.form.get('quantityLive') # Default 0
             if sessionLive == "true":
-                total_attendee+=quantityLive
+                total_attendee+=int(quantityLive)
                 session.append({"Live": priceLive})
             
             sessionRecording = request.form.get("sessionRecording") # True/ False
@@ -318,7 +318,7 @@ def corporateorder():
             
             
             if sessionRecording == "true":
-                total_attendee+=quantityRecording
+                total_attendee+=int(quantityRecording)
                 session.append({"Recording": priceRecording})
             
             sessionDigitalDownload = request.form.get('sessionDigitalDownload') # True or False
@@ -326,7 +326,7 @@ def corporateorder():
             quantityDigitalDownload = request.form.get('quantityDigitalDownload') # Default 0
             
             if sessionDigitalDownload == "true":
-                total_attendee+=quantityDigitalDownload
+                total_attendee+=int(quantityDigitalDownload)
                 session.append({"DigitalDownload": priceDigitalDownload})
             
             sessionTranscript = request.form.get("sessionTranscript") # True or False
@@ -334,7 +334,7 @@ def corporateorder():
             quantityTranscript = request.form.get('quantityTranscript') # Default 0
             
             if sessionTranscript == "true":
-                total_attendee+=quantityTranscript
+                total_attendee+=int(quantityTranscript)
                 session.append({"Transcript":priceTranscript})
             
             # Extract keys and store them as a comma-separated string
