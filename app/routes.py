@@ -309,6 +309,7 @@ def corporateorder():
             priceLive = request.form.get('priceLive')
             quantityLive = request.form.get('quantityLive') # Default 0
             if sessionLive == "true":
+                total_attendee+=quantityLive
                 session.append({"Live": priceLive})
             
             sessionRecording = request.form.get("sessionRecording") # True/ False
@@ -317,6 +318,7 @@ def corporateorder():
             
             
             if sessionRecording == "true":
+                total_attendee+=quantityRecording
                 session.append({"Recording": priceRecording})
             
             sessionDigitalDownload = request.form.get('sessionDigitalDownload') # True or False
@@ -324,6 +326,7 @@ def corporateorder():
             quantityDigitalDownload = request.form.get('quantityDigitalDownload') # Default 0
             
             if sessionDigitalDownload == "true":
+                total_attendee+=quantityDigitalDownload
                 session.append({"DigitalDownload": priceDigitalDownload})
             
             sessionTranscript = request.form.get("sessionTranscript") # True or False
@@ -331,6 +334,7 @@ def corporateorder():
             quantityTranscript = request.form.get('quantityTranscript') # Default 0
             
             if sessionTranscript == "true":
+                 total_attendee+=quantityTranscript
                 session.append({"Transcript":priceTranscript})
             
             # Extract keys and store them as a comma-separated string
@@ -342,7 +346,7 @@ def corporateorder():
                 customername = request.form.get("customername")
                 country =  request.form.get("country")
                 attendees = request.form.get("attendees") #for corporate purchase
-                total_attendee = request.form.get("total_attendee") # for corporate purchase that is sum of quantity of all webinars quantity
+                # total_attendee = request.form.get("total_attendee") # for corporate purchase that is sum of quantity of all webinars quantity
                 
                 order_datetimezone = request.form.get("order_datetimezone")
                 date_time_str = order_datetimezone
@@ -403,6 +407,8 @@ def corporateorder():
                 "document" : document,
                 "ist_time" : current_time_ist,
                 "invoice_number" : invoice_number,
+                "total_attendee":total_attendee,
+                
                 }
             
     
