@@ -334,7 +334,7 @@ def corporateorder():
             quantityTranscript = request.form.get('quantityTranscript') # Default 0
             
             if sessionTranscript == "true":
-                 total_attendee+=quantityTranscript
+                total_attendee+=quantityTranscript
                 session.append({"Transcript":priceTranscript})
             
             # Extract keys and store them as a comma-separated string
