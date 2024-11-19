@@ -295,6 +295,7 @@ def corporateorder():
         ordertimezone = now_utc.tzinfo
         
         id = len(list(mongo.db.corporate_order.find({})))+1
+        id = str(id)+"_"+"CO"
         if request.method in 'POST':
             
             customeremail = request.form.get('customeremail')
@@ -408,11 +409,13 @@ def corporateorder():
                 "ist_time" : current_time_ist,
                 "invoice_number" : invoice_number,
                 "total_attendee":total_attendee,
+                "order_type":"corporate",
                 
                 }
             
     
-            response_order, response_user = Order.update_corporateorder(order_data), Login.user_order(customeremail, paymentstatus, Webinar) 
+            response_order, response_user = Order.update_corporateorder(order_data), Login.user_order(customeremail, paymentstatus, Webinar)
+            Order.update_order(order_data) #update corporate order in orders documents also
             if paymentstatus == "purchased":
                 
                 
@@ -579,6 +582,7 @@ def order():
                 "document" : document,
                 "ist_time" : current_time_ist,
                 "invoice_number" : invoice_number,
+                "order_type":"individual"
                 }
             
     
@@ -656,6 +660,7 @@ def newsletter_order():
         ordertimezone = now_utc.tzinfo
         
         id = len(list(mongo.db.newsletter_order.find({})))+1
+        id = str(id)+"_"+"NO"
         if request.method == 'POST':
             
             website = "HEALTHPROFS"
@@ -728,10 +733,12 @@ def newsletter_order():
                 "document" : document,
                 "ist_time" : current_time_ist,
                 "invoice_number" : invoice_number,
+                "order_type":"newsletter",
                 }
             
             # for newsletter login component needs to be updated
-            response_order, response_user = Order.update_newsletterorder(order_data), Login.user_newsletterorder(customeremail, paymentstatus, newsletter) 
+            response_order, response_user = Order.update_newsletterorder(order_data), Login.user_newsletterorder(customeremail, paymentstatus, newsletter)
+            Order.update_order(order_data) #update newsletter order in orders documents also
             if paymentstatus == "purchased":
                 
                 
