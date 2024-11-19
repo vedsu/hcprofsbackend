@@ -106,6 +106,7 @@ class Order():
                     customername = order.get("customername")
                     document = order.get("document")
                     order_type = order.get("order_type")
+                    total_attendee = order.get("total_attendee)
 
                     if paymentstatus == "purchased":
                         projection ={"_id":0}
@@ -152,7 +153,8 @@ class Order():
                             "digitaldownload_url": digitaldownload_url,
                             "transcript_url" : transcript_url,
                             "document" : document,
-                            "order_type":order_type
+                            "order_type":order_type,
+                            "total_attendee":total_attendee
                             }
 
                             dashboard_list.append(dashboard_dict)
