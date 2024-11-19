@@ -106,7 +106,7 @@ class Order():
                     customername = order.get("customername")
                     document = order.get("document")
                     order_type = order.get("order_type")
-                    total_attendee = order.get("total_attendee)
+                    total_attendee = order.get("total_attendee")
 
                     if paymentstatus == "purchased":
                         projection ={"_id":0}
