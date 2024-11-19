@@ -44,7 +44,7 @@ class Order():
                 
                 for order in orders:
                     
-                    id = order.get("id")
+                    # id = order.get("id")
                     topic = order.get("topic")
                     customeremail = order.get("customeremail")
                     paymentstatus = order.get("paymentstatus")
@@ -57,7 +57,7 @@ class Order():
                         if newsletter_data:
                             newsletter = newsletter_data[0]
                             # print("YES")
-                            
+                            id = newsletter.get("id")
                             topic = newsletter.get("topic"),
                             published_date = newsletter.get("published_date"),
                             newsletter_doc = newsletter.get("document")
@@ -96,7 +96,7 @@ class Order():
                 for order in orders:
                     
                     live_url, recording_url, digitaldownload_url, transcript_url = None, None, None, None
-                    id = order.get("id")
+                    # id = order.get("id")
                     topic = order.get("topic")
                     customeremail = order.get("customeremail")
                     paymentstatus = order.get("paymentstatus")
@@ -115,6 +115,7 @@ class Order():
                         if webinar_data:
                             webinar = webinar_data[0]
                             # print("YES")
+                            id = webinar.get("id")
                             date = webinar.get("date")
                             time = webinar.get("time")
                             topic = webinar.get("topic")
