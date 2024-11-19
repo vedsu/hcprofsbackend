@@ -880,6 +880,18 @@ def view_newsletter():
         response = Newsletter.activelist_newsletter()
         return response,200
 
+#hcprofs backend
+@app.route('/webinar/<w_id>')
+def webinar_details(w_id):
+    webinar_info = Webinar.data_webinar(w_id)
+    return webinar_info
+
+#hcprofs backend
+@app.route('/newsletter/<n_id>')
+def newsletter_details(n_id):
+        newsletter_info = Newsletter.view_newsletter(n_id)
+        return newsletter_info
+
 #masterdata backend
 @app.route('/newsletter_panel/<n_id>', methods = ['GET','POST'])
 def update_newsletter(n_id):
