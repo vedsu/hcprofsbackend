@@ -73,9 +73,12 @@ class Login():
     def authenticate(login_email, login_password, login_type, website):
 
         try:
-            user = mongo.db.user_data.find_one({"email":login_email, "password": login_password, "UserType": login_type,"website":website})
+            # user = mongo.db.user_data.find_one({"email":login_email, "password": login_password, "UserType": login_type,"website":website})
+            
+            user = mongo.db.user_data.find_one({"email":login_email, "password": login_password, "UserType": login_type,"website":website},{"_id":0})
             if user:
-                return ({"success": True, "message": "login successfull"}),200
+                # return ({"success": True, "message": "login successfull"}),200
+                return ({"success": True, "message": user}),200
             else:
                 return ({"success": False, "message": "invalid credentials"}),403
             
