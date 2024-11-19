@@ -23,7 +23,7 @@ class Newsletter():
                     "price":newsletter.get("price"),
                     "thumbnail":newsletter.get("thumbnail"),
                     "document":newsletter.get("document"),
-                    "published_at": newsletter.get("published_at")
+                    "published_at": newsletter.get("published_date")
 
                 }
                 newsletter_list.append(newsletter_dict)
