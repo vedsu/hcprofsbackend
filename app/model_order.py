@@ -44,7 +44,7 @@ class Order():
                 
                 for order in orders:
                     
-                    # id = order.get("id")
+                    o_id = order.get("id")
                     topic = order.get("topic")
                     customeremail = order.get("customeremail")
                     paymentstatus = order.get("paymentstatus")
@@ -57,7 +57,7 @@ class Order():
                         if newsletter_data:
                             newsletter = newsletter_data[0]
                             # print("YES")
-                            id = newsletter.get("id")
+                            w_id = newsletter.get("id")
                             topic = newsletter.get("topic"),
                             published_date = newsletter.get("published_date"),
                             newsletter_doc = newsletter.get("document")
@@ -65,7 +65,8 @@ class Order():
                             
                             
                             dashboard_dict = {
-                            "id":id,
+                            "o_id":o_id,
+                            "w_id":w_id,
                             "newsletter" : topic[0],
                             "document" : document,
                             "published_date":published_date[0],
@@ -96,7 +97,7 @@ class Order():
                 for order in orders:
                     
                     live_url, recording_url, digitaldownload_url, transcript_url = None, None, None, None
-                    # id = order.get("id")
+                    o_id = order.get("id")
                     topic = order.get("topic")
                     customeremail = order.get("customeremail")
                     paymentstatus = order.get("paymentstatus")
@@ -115,7 +116,7 @@ class Order():
                         if webinar_data:
                             webinar = webinar_data[0]
                             # print("YES")
-                            id = webinar.get("id")
+                            w_id = webinar.get("id")
                             date = webinar.get("date")
                             time = webinar.get("time")
                             topic = webinar.get("topic")
@@ -143,7 +144,8 @@ class Order():
                                 transcript_url = urlTranscript
                             
                             dashboard_dict = {
-                            "id":id,
+                            "o_id":o_id,
+                            "w_id":w_id,
                             "customername":customername ,
                             "webinar" : topic,
                             "speaker" : speaker ,
