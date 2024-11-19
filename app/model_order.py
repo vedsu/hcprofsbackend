@@ -44,7 +44,7 @@ class Order():
                 
                 for order in orders:
                     
-                    
+                    id = order.get("id")
                     topic = order.get("topic")
                     customeremail = order.get("customeremail")
                     paymentstatus = order.get("paymentstatus")
@@ -65,7 +65,7 @@ class Order():
                             
                             
                             dashboard_dict = {
-                            
+                            "id":id,
                             "newsletter" : topic[0],
                             "document" : document,
                             "published_date":published_date[0],
@@ -96,6 +96,7 @@ class Order():
                 for order in orders:
                     
                     live_url, recording_url, digitaldownload_url, transcript_url = None, None, None, None
+                    id = order.get("id")
                     topic = order.get("topic")
                     customeremail = order.get("customeremail")
                     paymentstatus = order.get("paymentstatus")
@@ -141,6 +142,7 @@ class Order():
                                 transcript_url = urlTranscript
                             
                             dashboard_dict = {
+                            "id":id,
                             "customername":customername ,
                             "webinar" : topic,
                             "speaker" : speaker ,
