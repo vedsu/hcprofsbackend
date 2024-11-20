@@ -13,7 +13,7 @@ class Login():
         user = mongo.db.user_data.find_one({"email":register_email})
         
         if user:
-            return ({"success":False, "message":"User already registered, Please Login"}),403
+            return ({"success":False, "message":"User already registered, Please Login"}),203
         else:
             try:
                 msg = Message('Your Account Credentials', sender = 'cs@hcprofs.com', recipients = [register_email])
@@ -64,7 +64,7 @@ class Login():
                             mongo.db.user_data.insert_one({"name":register_name,"role":register_role,"email":register_email, "password":register_password, "UserType": register_type, "website":website})
                             return ({"success": True, "message": "user registered successfully, email sent"}),201
                     except Exception as e:
-                            return ({"success": False, "message": str(e)}),403
+                            return ({"success": False, "message": str(e)}),203
 
             except Exception as e:
                 return({"success":False, "message":str(e)}),403
@@ -80,10 +80,10 @@ class Login():
                 # return ({"success": True, "message": "login successfull"}),200
                 return ({"success": True, "message": user}),200
             else:
-                return ({"success": False, "message": "invalid credentials"}),403
+                return ({"success": False, "message": "invalid credentials"}),203
             
         except Exception as e:
-            return ({"success": False, "message":str(e)}),403          
+            return ({"success": False, "message":str(e)}),203          
     
     
     @staticmethod
@@ -104,7 +104,7 @@ class Login():
             return ({"success": True, "message":"webinar updated for user"}),200
         
         except Exception as e:
-            return ({"success": False, "message":str(e)}),403
+            return ({"success": False, "message":str(e)}),203
         
     
     @staticmethod
@@ -126,4 +126,4 @@ class Login():
         
         except Exception as e:
         
-            return ({"success": False, "message":str(e)}),403
+            return ({"success": False, "message":str(e)}),203
