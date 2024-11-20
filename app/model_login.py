@@ -57,7 +57,7 @@ class Login():
                                                         "history_purchased":[], "history_pending":[],"newsletter_purchased":[], "newsletter_pending":[] })
                         return  ({"success": True, "message": "user registered successfully, email sent"}),201
                     except Exception as e:
-                        return ({"success":False, "message":"Error in registering user"}),403
+                        return ({"success":False, "message":"Error in registering user"}),203
                 else:
                     
                     try:
@@ -67,7 +67,7 @@ class Login():
                             return ({"success": False, "message": str(e)}),203
 
             except Exception as e:
-                return({"success":False, "message":str(e)}),403
+                return({"success":False, "message":str(e)}),203
     
     @staticmethod
     def authenticate(login_email, login_password, login_type, website):
