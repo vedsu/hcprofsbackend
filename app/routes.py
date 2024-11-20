@@ -131,7 +131,7 @@ def user_login():
 @app.route('/forgotpassword', methods =['POST'])
 def forgot_password():
     if request.method == "POST":
-        email = request.form.get("Email")
+        email = request.json.get("Email")
         # website = request.form.get("Website")
         website = "HEALTHPROFS"
 
@@ -145,10 +145,10 @@ def forgot_password():
 @app.route('/subscribe', methods = ['POST'])
 def subscriber():
     if request.method == 'POST':
-        subscriber_email = request.form.get("Subscriber")
-        subscriber_name = request.form.get("subscriber_name")
-        subscription_type = request.form.get("subscription_type")
-        subscriber_jobtitle = request.form.get("subscriber_jobtitle")
+        subscriber_email = request.json.get("Subscriber")
+        subscriber_name = request.json.get("subscriber_name")
+        subscription_type = request.json.get("subscription_type")
+        subscriber_jobtitle = request.json.get("subscriber_jobtitle")
         
         response = Utility.subscribe_list(subscriber_email, subscriber_name, subscription_type, subscriber_jobtitle)
         return response
@@ -156,7 +156,7 @@ def subscriber():
 @app.route('/unsubscribe', methods = ['POST'])
 def unsubscriber():
     if request.method == 'POST':
-        unsubscriber = request.form.get("Unsubscriber")
+        unsubscriber = request.json.get("Unsubscriber")
         response = Utility.unsubscribe_list(unsubscriber)
         return response
 
@@ -164,9 +164,9 @@ def unsubscriber():
 def contact_us():
     if request.method == 'POST':
         query_email = "support@pharmaprofs.com"
-        name = request.form.get("Name")
-        email = request.form.get("Email")
-        message_content = request.form.get("Message")
+        name = request.json.get("Name")
+        email = request.json.get("Email")
+        message_content = request.json.get("Message")
         try:
             msg = Message('Query',
                   sender='cs@hcprofs.com',
