@@ -6,7 +6,7 @@ from flask import render_template_string
 class Login():
 
     @staticmethod
-    def register(register_name,register_email,register_role,register_password,register_type,website):
+    def register(register_name,register_email,register_role,register_number,register_password,register_type,website):
         
         websiteUrl = "https://hcprofs.com/"
         
@@ -52,7 +52,7 @@ class Login():
                 if register_type == "Attendee":
                     
                     try:
-                        mongo.db.user_data.insert_one({"name":register_name,"role":register_role,"email":register_email, "password":register_password,
+                        mongo.db.user_data.insert_one({"name":register_name,"role":register_role,"email":register_email,"contact":register_number, "password":register_password,
                                                         "UserType": register_type, "website":website,
                                                         "history_purchased":[], "history_pending":[],"newsletter_purchased":[], "newsletter_pending":[] })
                         return  ({"success": True, "message": "user registered successfully, email sent"}),201
@@ -61,7 +61,7 @@ class Login():
                 else:
                     
                     try:
-                            mongo.db.user_data.insert_one({"name":register_name,"role":register_role,"email":register_email, "password":register_password, "UserType": register_type, "website":website})
+                            mongo.db.user_data.insert_one({"name":register_name,"role":register_role,"email":register_email,"contact":register_number, "password":register_password, "UserType": register_type, "website":website})
                             return ({"success": True, "message": "user registered successfully, email sent"}),201
                     except Exception as e:
                             return ({"success": False, "message": str(e)}),203
