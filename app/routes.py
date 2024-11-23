@@ -114,7 +114,7 @@ def user_register():
         website = "HEALTHPROFS"
 
         response = Login.register(register_name,register_email,register_role,register_number,register_password,register_type,website)
-        return response, {"name":register_name, "email":register_email, "role":register_role, "contact":register_number}
+        return response
 
 @app.route('/login', methods=['POST'])
 def user_login():
