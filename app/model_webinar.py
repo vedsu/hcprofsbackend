@@ -17,7 +17,7 @@ class Webinar():
                 webinar = webinar_data[0]
                 # return webinar
                 speaker = webinar.get("speaker")
-                speaker_photo = mongo.db.speaker_data.find_one({"name":speaker},{"_id":0,"photo":1})
+                speaker_detail = mongo.db.speaker_data.find_one({"name":speaker},{"_id":0,"photo":1,"id":1})
                 webinar_data_dict ={
                 
                         "id":webinar.get("id"),
@@ -25,7 +25,9 @@ class Webinar():
                         "topic":webinar.get("topic"),
                         "industry":webinar.get("industry"),
                         "speaker": speaker,
-                        "speaker_image": speaker_photo.get("photo"),
+                        "speaker_id": speaker_detail.get("id"),
+                        "speaker_image": speaker_detail.get("photo"),
+                    
                         
                         "date":webinar.get("date_time"),
                         "time":webinar.get("time"),
