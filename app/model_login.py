@@ -48,21 +48,22 @@ class Login():
                                    <p>Thanks & Regards!<br>Webinar Organizer Team</p>
                                    """, name = register_name,email=register_email, password=register_password, website=websiteUrl)
                 mail.send(msg)
-
+                user = {"name":register_name,"role":register_role,"email":register_email,"contact":register_number}
                 if register_type == "Attendee":
                     
                     try:
+                        
                         mongo.db.user_data.insert_one({"name":register_name,"role":register_role,"email":register_email,"contact":register_number, "password":register_password,
                                                         "UserType": register_type, "website":website,
                                                         "history_purchased":[], "history_pending":[],"newsletter_purchased":[], "newsletter_pending":[] })
-                        return  ({"success": True, "message": "user registered successfully, email sent"}),201
+                        return  ({"success": True, "message":user}),201
                     except Exception as e:
                         return ({"success":False, "message":"Error in registering user"}),203
                 else:
                     
                     try:
                             mongo.db.user_data.insert_one({"name":register_name,"role":register_role,"email":register_email,"contact":register_number, "password":register_password, "UserType": register_type, "website":website})
-                            return ({"success": True, "message": "user registered successfully, email sent"}),201
+                            return ({"success": True, "message": user}),201
                     except Exception as e:
                             return ({"success": False, "message": str(e)}),203
 
