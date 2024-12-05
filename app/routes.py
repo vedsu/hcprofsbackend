@@ -163,7 +163,7 @@ def unsubscriber():
 @app.route('/contactus', methods = ['POST'])
 def contact_us():
     if request.method == 'POST':
-        query_email = "support@pharmaprofs.com"
+        query_email = "cs@hcprofs.com"
         name = request.json.get("Name")
         email = request.json.get("Email")
         message_content = request.json.get("Message")
