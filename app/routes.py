@@ -206,7 +206,7 @@ def contact_us():
 @app.route('/speakeropportunity', methods = ['POST'])
 def speaker_opportunity():
     if request.method in 'POST':
-        query_email = "brian@pharmaprofs.com"
+        query_email = "brian@profstraining.com"
         name = request.form.get("Name")
         email = request.form.get("Email")
         education = request.form.get("Education")
