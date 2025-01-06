@@ -38,7 +38,7 @@ def create_payment_intent():
                 'city': "City",
                 'state': "State",
                 'country': data['country'],
-                'postal_code': 444444
+                'postal_code': 75201
             },
             source = data['stripeToken']
         )
@@ -46,7 +46,7 @@ def create_payment_intent():
         charge = stripe.Charge.create(
             customer=customer.id,
             amount = data['amount']*100,
-            currency='inr',
+            currency='usd',
             description='Stripe Charge'
         )
         created_time = datetime.datetime.fromtimestamp(customer['created']).astimezone()
