@@ -67,7 +67,7 @@ class Utility():
             f'Order Date - {date_time_str}'
         ]
         rightSection = [
-            f'Order Amount - {orderamount}'
+            f'Order Amount - ${orderamount}'
         ]
         customerDetails = [
             'Customer Details:',
@@ -182,7 +182,7 @@ class Utility():
             f'Order Date - {date_time_str}'
         ]
         rightSection = [
-            f'Order Amount - {orderamount}'
+            f'Order Amount - ${orderamount}'
         ]
         customerDetails = [
             'Customer Details:',
