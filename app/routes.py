@@ -356,18 +356,39 @@ def corporateorder():
                 date_time_format = "%a, %d %b %Y %H:%M:%S %Z"
                 # Parse the date-time string into a datetime object
                 date_time_obj = datetime.datetime.strptime(date_time_str, date_time_format)
-                orderdate =  date_time_obj.date()
-                ordertime = date_time_obj.time()
-                ordertimezone = pytz.timezone('GMT')
+                # orderdate =  date_time_obj.date()
+                # ordertime = date_time_obj.time()
+                # ordertimezone = pytz.timezone('GMT')
+                
+                # Define the source timezone (GMT) and the target timezone (EST)
+                gmt_timezone = pytz.timezone('GMT')
+                est_timezone = pytz.timezone('US/Eastern')
+                ist_timezone = pytz.timezone('Asia/Kolkata')
+    
+                # Localize the datetime object to the GMT timezone
+                gmt_datetime = gmt_timezone.localize(date_time_obj)
+                # Convert the GMT datetime to EST
+                est_datetime = gmt_datetime.astimezone(est_timezone)
+                # Convert the GMT datetime to IST
+                ist_datetime = gmt_datetime.astimezone(ist_timezone)
+
+                
+                # Extract the date, time, and timezone
+                orderdate = est_datetime.date()
+                ordertime = est_datetime.time()
+                ordertimezone = est_datetime.tzinfo
+                order_datetime_str = f"{orderdate} {ordertime} EST"
                 invoice_number = request.form.get("invoice_number")
                 
                 #website name
-                website=="HEALTHPROFS"
+                website="HEALTHPROFS"
                 websiteUrl = "https://hcprofs.com/"
                 current_time_ist = get_current_time_ist()
                 
     
-                document = Utility.generate_pdf(Webinar, customername, country, websiteUrl, billingemail, date_time_str, orderamount, invoice_number)
+                # document = Utility.generate_pdf(Webinar, customername, country, websiteUrl, billingemail, date_time_str, orderamount, invoice_number)
+                document = Utility.generate_pdf(Webinar, customername, country, websiteUrl, billingemail, order_datetime_str, orderamount, invoice_number)
+                document_ist = Utility.generatelocal_pdf(Webinar, customername, country, websiteUrl, billingemail, current_time_ist, orderamount, invoice_number)
             
             else:
                 
@@ -406,6 +427,7 @@ def corporateorder():
                 "country": country,
                 "website": website , # Current Website
                 "document" : document,
+                "document_ist":document_ist,
                 "ist_time" : current_time_ist,
                 "invoice_number" : invoice_number,
                 "total_attendee":total_attendee,
@@ -560,7 +582,7 @@ def order():
                 # orderdate =  date_time_obj.date()
                 # ordertime = date_time_obj.time()
                 # ordertimezone = pytz.timezone('GMT')
-                invoice_number = request.form.get("invoice_number")c
+                invoice_number = request.form.get("invoice_number")
                 
                 #website name
                 website="HEALTHPROFS"
@@ -722,19 +744,31 @@ def newsletter_order():
                     # ordertime = date_time_obj.time()
                     # ordertimezone = pytz.timezone('GMT')
                     
-                    
-                orderdate =  date_time_obj.date()
-                ordertime = date_time_obj.time()
-                ordertimezone = pytz.timezone('GMT')
+                gmt_timezone = pytz.timezone('GMT')
+                est_timezone = pytz.timezone('US/Eastern')
+                ist_timezone = pytz.timezone('Asia/Kolkata')
+                
+                # Localize the datetime object to the GMT timezone
+                gmt_datetime = gmt_timezone.localize(date_time_obj)
+                # Convert the GMT datetime to EST
+                est_datetime = gmt_datetime.astimezone(est_timezone)
+                # Convert the GMT datetime to IST
+                ist_datetime = gmt_datetime.astimezone(ist_timezone)
+        
+                orderdate =  est_datetime.date()
+                ordertime = est_datetime.time()
+                ordertimezone = est_datetime.tzinfo
                 invoice_number = request.form.get("invoice_number")
                 
                 #website name
-                website=="HEALTHPROFS"
+                website="HEALTHPROFS"
                 websiteUrl = "https://hcprofs.com/"
-                current_time_ist = get_current_time_ist()
+                current_time_ist = ist_datetime
                 
     
-                document = Utility.generate_pdf(newsletter, customername, country, websiteUrl, billingemail, date_time_str, orderamount, invoice_number)
+                # document = Utility.generate_pdf(newsletter, customername, country, websiteUrl, billingemail, date_time_str, orderamount, invoice_number)
+                document = Utility.generate_pdf(Webinar, customername, country, websiteUrl, billingemail, order_datetime_str, orderamount, invoice_number)
+                document_ist = Utility.generatelocal_pdf(Webinar, customername, country, websiteUrl, billingemail, current_time_ist, orderamount, invoice_number)
             
             else:
                 
