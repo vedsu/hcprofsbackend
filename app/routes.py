@@ -491,6 +491,7 @@ def order():
         ordertimezone = now_utc.tzinfo
         
         id = len(list(mongo.db.order_data.find({})))+1
+        id = str(id)+"_"+"O"
         if request.method in 'POST':
             
             customeremail = request.form.get('customeremail')
@@ -541,16 +542,21 @@ def order():
                 # Define the source timezone (GMT) and the target timezone (EST)
                 gmt_timezone = pytz.timezone('GMT')
                 est_timezone = pytz.timezone('US/Eastern')
+                ist_timezone = pytz.timezone('Asia/Kolkata')
     
                 # Localize the datetime object to the GMT timezone
                 gmt_datetime = gmt_timezone.localize(date_time_obj)
                 # Convert the GMT datetime to EST
                 est_datetime = gmt_datetime.astimezone(est_timezone)
+                # Convert the GMT datetime to IST
+                ist_datetime = gmt_datetime.astimezone(ist_timezone)
+
+                
                 # Extract the date, time, and timezone
                 orderdate = est_datetime.date()
                 ordertime = est_datetime.time()
                 ordertimezone = est_datetime.tzinfo
-                order_datetime_str = f"{orderdate}{ordertime}{ordertimezone}"
+                order_datetime_str = f"{orderdate} {ordertime} {"EST"}"
                 # orderdate =  date_time_obj.date()
                 # ordertime = date_time_obj.time()
                 # ordertimezone = pytz.timezone('GMT')
@@ -559,7 +565,8 @@ def order():
                 #website name
                 website=="HEALTHPROFS"
                 websiteUrl = "https://hcprofs.com/"
-                current_time_ist = get_current_time_ist()
+                current_time_ist = ist_datetime
+                # current_time_ist = get_current_time_ist()
                 
     
                 # document = Utility.generate_pdf(Webinar, customername, country, websiteUrl, billingemail, date_time_str, orderamount, invoice_number)
