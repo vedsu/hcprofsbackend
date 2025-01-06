@@ -556,7 +556,7 @@ def order():
                 orderdate = est_datetime.date()
                 ordertime = est_datetime.time()
                 ordertimezone = est_datetime.tzinfo
-                order_datetime_str = f"{orderdate} {ordertime} {"EST"}"
+                order_datetime_str = f"{orderdate} {ordertime} EST"
                 # orderdate =  date_time_obj.date()
                 # ordertime = date_time_obj.time()
                 # ordertimezone = pytz.timezone('GMT')
@@ -571,6 +571,7 @@ def order():
     
                 # document = Utility.generate_pdf(Webinar, customername, country, websiteUrl, billingemail, date_time_str, orderamount, invoice_number)
                 document = Utility.generate_pdf(Webinar, customername, country, websiteUrl, billingemail, order_datetime_str, orderamount, invoice_number)
+                document_ist = Utility.generate_pdf(Webinar, customername, country, websiteUrl, billingemail, current_time_ist, orderamount, invoice_number)
             
             else:
                 
@@ -601,6 +602,7 @@ def order():
                 "country": country,
                 "website": website , # Current Website
                 "document" : document,
+                "document_ist":document_ist,
                 "ist_time" : current_time_ist,
                 "invoice_number" : invoice_number,
                 "order_type":"individual"
