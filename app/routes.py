@@ -788,6 +788,7 @@ def newsletter_order():
                 "country": country,
                 "website": website , # Current Website
                 "document" : document,
+                "document_ist":document_ist,
                 "ist_time" : current_time_ist,
                 "invoice_number" : invoice_number,
                 "order_type":"newsletter",
