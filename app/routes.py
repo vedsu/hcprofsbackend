@@ -847,9 +847,9 @@ def newsletter_order():
                     <p>Thank you for your order!</p>
                     <p><b>Here are your Order Details:</b></p>
                     <ul>
-                        <li><b>Webinar Name:</b> {{ newsletter_name }}</li>
+                        <li><b>Newsletter Name:</b> {{ newsletter_name }}</li>
                         <li><b>Order Amount:</b> {{ order_amount }}</li>
-                        <li><b>Session:</b> {{ session }}</li>
+                        # <li><b>Session:</b> {{ session }}</li>
                         <li><b>Invoice:</b> <a href="{{ s3_link }}">{{ s3_link }}</a></li>
                         <li><b>Website:</b> <a href="{{ website_url }}">{{ website_url }}</a></li>
                     </ul>
