@@ -563,7 +563,7 @@ def order():
                 # invoice_number = request.form.get("invoice_number")
                 
                 #website name
-                website=="HEALTHPROFS"
+                website="HEALTHPROFS"
                 websiteUrl = "https://hcprofs.com/"
                 current_time_ist = ist_datetime
                 # current_time_ist = get_current_time_ist()
@@ -571,7 +571,7 @@ def order():
     
                 # document = Utility.generate_pdf(Webinar, customername, country, websiteUrl, billingemail, date_time_str, orderamount, invoice_number)
                 document = Utility.generate_pdf(Webinar, customername, country, websiteUrl, billingemail, order_datetime_str, orderamount, invoice_number)
-                document_ist = Utility.generate_pdf(Webinar, customername, country, websiteUrl, billingemail, current_time_ist, orderamount, invoice_number)
+                document_ist = Utility.generatelocal_pdf(Webinar, customername, country, websiteUrl, billingemail, current_time_ist, orderamount, invoice_number)
             
             else:
                 
