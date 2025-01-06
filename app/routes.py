@@ -759,7 +759,7 @@ def newsletter_order():
                 ordertime = est_datetime.time()
                 ordertimezone = est_datetime.tzinfo
                 invoice_number = request.form.get("invoice_number")
-                
+                order_datetime_str = f"{orderdate} {ordertime} EST"
                 #website name
                 website="HEALTHPROFS"
                 websiteUrl = "https://hcprofs.com/"
