@@ -726,9 +726,24 @@ def newsletter_order():
                     date_time_format = "%a, %d %b %Y %H:%M:%S %Z"
                     # Parse the date-time string into a datetime object
                     date_time_obj = datetime.datetime.strptime(date_time_str, date_time_format)
+                    gmt_timezone = pytz.timezone('GMT')
+                    est_timezone = pytz.timezone('US/Eastern')
+                    ist_timezone = pytz.timezone('Asia/Kolkata')
+
+                    # Localize the datetime object to the GMT timezone
+                    gmt_datetime = gmt_timezone.localize(date_time_obj)
+                    # Convert the GMT datetime to EST
+                    est_datetime = gmt_datetime.astimezone(est_timezone)
+                    # Convert the GMT datetime to IST
+                    ist_datetime = gmt_datetime.astimezone(ist_timezone)
                     # orderdate =  date_time_obj.date()
                     # ordertime = date_time_obj.time()
                     # ordertimezone = pytz.timezone('GMT')
+                    orderdate =  est_datetime.date()
+                    ordertime = est_datetime.time()
+                    ordertimezone = est_datetime.tzinfo
+                    order_datetime_str = f"{orderdate} {ordertime} EST"
+                    current_time_ist = ist_datetime
                 except:
                     # Date string from frontend
                     date_time_format = "2024-11-13T07:20:16.033Z"
@@ -740,30 +755,32 @@ def newsletter_order():
                     # Convert to ISO 8601 format (YYYY-MM-DDTHH:MM:SS.sss+00:00)
                     # iso_format_date = date_time_obj.isoformat()
                     date_time_obj = datetime.datetime.fromisoformat(date_time_str.replace("Z", "+00:00"))
-                    # orderdate =  date_time_obj.date()
-                    # ordertime = date_time_obj.time()
+                    orderdate =  date_time_obj.date()
+                    ordertime = date_time_obj.time()
                     # ordertimezone = pytz.timezone('GMT')
+                    ordertimezone = pytz.timezone('US/Eastern')
+                    order_datetime_str = f"{orderdate} {ordertime} EST"
+                    # Define the IST timezone
+                    ist_timezone = pytz.timezone('Asia/Kolkata')
                     
-                gmt_timezone = pytz.timezone('GMT')
-                est_timezone = pytz.timezone('US/Eastern')
-                ist_timezone = pytz.timezone('Asia/Kolkata')
+                    # Get the current time in UTC
+                    utc_now = datetime.datetime.utcnow()
+                    
+                    # Localize the UTC time and convert it to IST
+                    ist_now = pytz.utc.localize(utc_now).astimezone(ist_timezone)
+                    current_time_ist = ist_now
+                    
+               
                 
-                # Localize the datetime object to the GMT timezone
-                gmt_datetime = gmt_timezone.localize(date_time_obj)
-                # Convert the GMT datetime to EST
-                est_datetime = gmt_datetime.astimezone(est_timezone)
-                # Convert the GMT datetime to IST
-                ist_datetime = gmt_datetime.astimezone(ist_timezone)
+                
         
-                orderdate =  est_datetime.date()
-                ordertime = est_datetime.time()
-                ordertimezone = est_datetime.tzinfo
+                
                 invoice_number = request.form.get("invoice_number")
-                order_datetime_str = f"{orderdate} {ordertime} EST"
+                # order_datetime_str = f"{orderdate} {ordertime} EST"
                 #website name
                 website="HEALTHPROFS"
                 websiteUrl = "https://hcprofs.com/"
-                current_time_ist = ist_datetime
+                
                 
     
                 # document = Utility.generate_pdf(newsletter, customername, country, websiteUrl, billingemail, date_time_str, orderamount, invoice_number)
