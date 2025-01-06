@@ -560,7 +560,7 @@ def order():
                 # orderdate =  date_time_obj.date()
                 # ordertime = date_time_obj.time()
                 # ordertimezone = pytz.timezone('GMT')
-                # invoice_number = request.form.get("invoice_number")
+                invoice_number = request.form.get("invoice_number")c
                 
                 #website name
                 website="HEALTHPROFS"
