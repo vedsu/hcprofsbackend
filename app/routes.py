@@ -767,8 +767,8 @@ def newsletter_order():
                 
     
                 # document = Utility.generate_pdf(newsletter, customername, country, websiteUrl, billingemail, date_time_str, orderamount, invoice_number)
-                document = Utility.generate_pdf(Webinar, customername, country, websiteUrl, billingemail, order_datetime_str, orderamount, invoice_number)
-                document_ist = Utility.generatelocal_pdf(Webinar, customername, country, websiteUrl, billingemail, current_time_ist, orderamount, invoice_number)
+                document = Utility.generate_pdf(newsletter, customername, country, websiteUrl, billingemail, order_datetime_str, orderamount, invoice_number)
+                document_ist = Utility.generatelocal_pdf(newsletter, customername, country, websiteUrl, billingemail, current_time_ist, orderamount, invoice_number)
             
             else:
                 
