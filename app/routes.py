@@ -831,7 +831,6 @@ def newsletter_order():
                     Here are your Order Details:
                     Newsletter Name: {newsletter}
                     Order Amount: {orderamount}
-                    
                     Invoice: {document}
                     Website: {websiteUrl}
     
@@ -849,7 +848,6 @@ def newsletter_order():
                     <ul>
                         <li><b>Newsletter Name:</b> {{ newsletter_name }}</li>
                         <li><b>Order Amount:</b> {{ order_amount }}</li>
-                        # <li><b>Session:</b> {{ session }}</li>
                         <li><b>Invoice:</b> <a href="{{ s3_link }}">{{ s3_link }}</a></li>
                         <li><b>Website:</b> <a href="{{ website_url }}">{{ website_url }}</a></li>
                     </ul>
