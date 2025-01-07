@@ -693,8 +693,8 @@ def newsletter_order():
         paymentstatus = None
         current_time_ist = None
         invoice_number = None
-        country = None
-        customername = None
+        country = "N/A"
+        customername = "N/A"
         billingemail = None
       
         response_confirmationmail = {"success":False,"message":"Order Not Placed"}
