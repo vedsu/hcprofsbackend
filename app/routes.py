@@ -693,8 +693,8 @@ def newsletter_order():
         paymentstatus = None
         current_time_ist = None
         invoice_number = None
-        country = "N/A"
-        customername = "N/A"
+        country = None
+        customername = None
         billingemail = None
       
         response_confirmationmail = {"success":False,"message":"Order Not Placed"}
@@ -745,6 +745,8 @@ def newsletter_order():
                     order_datetime_str = f"{orderdate} {ordertime} EST"
                     current_time_ist = ist_datetime
                 except:
+                    country = "N/A"
+                    customername = "N/A"
                     # Date string from frontend
                     date_time_format = "2024-11-13T07:20:16.033Z"
                     # Remove the `GMT` and timezone name from the string
