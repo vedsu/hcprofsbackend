@@ -1,6 +1,7 @@
 # Webinar Component
 
 from app import mongo
+from datetime import datetime
 
 class Webinar():
 
@@ -68,8 +69,34 @@ class Webinar():
     def view_webinar():
         webinar_list = []
         try:
+            # Get the current date and time
+            current_date = datetime.now()
             
-            webinar_data = list(mongo.db.webinar_data.find({"$and":[{"status":"Active"},{"website":"HEALTHPROFS"}]}).sort({"date_time":-1}))
+            # Fetch and sort future webinars
+            future_webinars = list(
+                mongo.db.webinar_data.find({
+                    "$and": [
+                        {"status": "Active"},
+                        {"website": "HEALTHPROFS"},
+                        {"date_time": {"$gte": current_date}}
+                    ]
+                }).sort("date_time", -1)  # Sort in descending order
+            )
+
+            # Fetch and sort past webinars
+            past_webinars = list(
+                mongo.db.webinar_data.find({
+                    "$and": [
+                        {"status": "Active"},
+                        {"website": "HEALTHPROFS"},
+                        {"date_time": {"$lt": current_date}}
+                    ]
+                }).sort("date_time", -1)  # Sort in descending order
+            )
+
+            # Combine future and past webinars into a single list
+            webinar_data = future_webinars + past_webinars
+            # webinar_data = list(mongo.db.webinar_data.find({"$and":[{"status":"Active"},{"website":"HEALTHPROFS"}]}).sort({"date_time":-1}))
             for webinar in webinar_data:
 
                 speaker = webinar.get("speaker")
