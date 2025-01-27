@@ -95,7 +95,8 @@ class Webinar():
             )
 
             # Combine future and past webinars into a single list
-            webinar_data = future_webinars + past_webinars
+            # webinar_data = future_webinars + past_webinars
+            webinar_data = future_webinars
             # webinar_data = list(mongo.db.webinar_data.find({"$and":[{"status":"Active"},{"website":"HEALTHPROFS"}]}).sort({"date_time":-1}))
             for webinar in webinar_data:
 
