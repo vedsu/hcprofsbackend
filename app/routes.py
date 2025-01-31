@@ -46,7 +46,7 @@ def create_payment_intent():
         charge = stripe.Charge.create(
             customer=customer.id,
             amount = data['amount']*100,
-            currency='usd',
+            currency='inr',
             description=data['invoice_number']
         )
         created_time = datetime.datetime.fromtimestamp(customer['created']).astimezone()
