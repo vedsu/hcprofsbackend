@@ -58,101 +58,262 @@ class Utility():
     @staticmethod
     def generatelocal_pdf(Webinar,customername, country, websiteUrl, customeremail, date_time_str, orderamount, invoice_number):
         # File and document details
-        documentTitle = 'Payment Receipt'
-        title = 'Invoice Details'
+        # documentTitle = 'Payment Receipt'
+        # title = 'Invoice Details'
+        
+        # # Sections of the Invoice
+        # leftSection = [
+        #     f'Invoice Number - {invoice_number}',
+        #     f'Order Date - {date_time_str}'
+        # ]
+        # rightSection = [
+        #     f'Order Amount - ${orderamount}'
+        # ]
+        # customerDetails = [
+        #     'Customer Details:',
+        #     f'Customer Name -  {customername}',
+        #     f'Registered Email - {customeremail}',
+        #     f'Country - {country}',
+        #     # f'Webinar Date: {webinardate}',
+        #     # f'Webinar Session: {comma_separated_keys}'
+        # ]
+        # webinarDetails = [
+        #     'Webinar Name -',
+        #     f'{Webinar}'  # Line break handled by keeping as separate lines
+        # ]
+        # thankYouNote = 'query?reach out to us at cs@hcprofs.com !'
+        # signature = 'Webinar Organizer Team'
+
+        # # Create PDF in memory
+        # buffer = BytesIO()
+        # pdf = canvas.Canvas(buffer, pagesize=letter)
+        # width, height = letter
+
+        # # Set the title of the document
+        # pdf.setTitle(documentTitle)
+
+        # # Add border around the page
+        # pdf.rect(20, 20, width - 40, height - 40, stroke=1, fill=0)
+
+        # # Shift all content downward
+        # y_shift = 40  # Shift content down by 40 units
+
+        # # Document Title at the top
+        # pdf.setFont('Helvetica-Bold', 18)
+        # pdf.drawCentredString(width / 2, height - 40 - y_shift, documentTitle)
+
+        # # Create the title by setting its font and putting it on the canvas
+        # pdf.setFont('Helvetica-Bold', 14)
+        # pdf.drawCentredString(width / 2, height - 80 - y_shift, title)
+
+        # # First section - Invoice details
+        # pdf.setFont("Helvetica-Bold", 10)
+        # text = pdf.beginText(40, height - 120 - y_shift)
+        # for line in leftSection:
+        #     text.textLine(line)
+        # pdf.drawText(text)
+
+        # text = pdf.beginText(width - 250, height - 120 - y_shift)
+        # for line in rightSection:
+        #     text.textLine(line)
+        # pdf.drawText(text)
+
+        # # Line separator for the second section
+        # pdf.line(40, height - 160 - y_shift, width - 40, height - 160 - y_shift)
+
+        # # Second section - Customer details
+        # text = pdf.beginText(40, height - 180 - y_shift)
+        # text.setFont("Helvetica-Bold", 10)
+        # text.textLine(customerDetails[0])  # Customer Details heading
+        # text.setFont("Helvetica", 14)  # Change font for the rest of the text
+        # text.moveCursor(0, 20)  # Add space after the heading
+
+        # for line in customerDetails[1:]:
+        #     text.textLine(line)
+        #     text.moveCursor(0, 15)  # Add space between lines to avoid overwriting
+        # pdf.drawText(text)
+
+        # # Line separator for the third section
+        # pdf.line(40, height - 340 - y_shift, width - 40, height - 340 - y_shift)
+
+        # # Third section - Webinar details
+        # text = pdf.beginText(40, height - 360 - y_shift)
+        # text.setFont("Helvetica-Bold", 10)
+        # for line in webinarDetails:
+        #     text.textLine(line)
+        # pdf.drawText(text)
+
+        # # Add the thank you note and signature at the bottom of the page
+        # pdf.setFont("Helvetica-Oblique", 8)
+        # pdf.setFillColor(colors.black)
+        # pdf.drawCentredString(width / 2, 80, thankYouNote)
+        # pdf.drawCentredString(width / 2, 60, signature)
+        
+        # # Add the website URL at the bottom-most position
+        # pdf.setFont("Helvetica", 8)
+        # pdf.drawCentredString(width / 2, 40, f'Website - {websiteUrl}')
+
+        # # Save the PDF to the in-memory buffer
+        # pdf.save()
+        # buffer.seek(0)
+        # Function to wrap text for long webinar descriptions
+        def wrap_text(text, max_chars_per_line):
+            words = text.split()
+            lines = []
+            current_line = ""
+        
+            for word in words:
+                if len(current_line) + len(word) + 1 <= max_chars_per_line:
+                    current_line += " " + word if current_line else word
+                else:
+                    lines.append(current_line)
+                    current_line = word
+        
+            if current_line:
+                lines.append(current_line)
+        
+            return lines
+        documentTitle = "HCProfs"
+        title = "Invoice Details"
         
         # Sections of the Invoice
         leftSection = [
-            f'Invoice Number - {invoice_number}',
-            f'Order Date - {date_time_str}'
+            f'Invoice Number # {invoice_number}',
+            f'Date : {date_time_str}',
+          
         ]
-        rightSection = [
-            f'Order Amount - ${orderamount}'
+        
+        rightSection3 = [
+            f'Grand Total : ${orderamount}'
         ]
+        
+        rightSection2 = [
+            f'Total Price',
+            f'${orderamount}'
+        ]
+        
+        rightSection1 = [
+            f'cs@hcprofs.com'
+        ]
+        
         customerDetails = [
-            'Customer Details:',
-            f'Customer Name -  {customername}',
-            f'Registered Email - {customeremail}',
-            f'Country - {country}',
-            # f'Webinar Date: {webinardate}',
-            # f'Webinar Session: {comma_separated_keys}'
+            'Recipient Details:',
+            f'Name : {customername}',
+            f'Email : {customeremail}',
+            f'Country : {country}'
         ]
+        
         webinarDetails = [
-            'Webinar Name -',
-            f'{Webinar}'  # Line break handled by keeping as separate lines
+            'Description',
+           
         ]
-        thankYouNote = 'query?reach out to us at cs@hcprofs.com !'
-        signature = 'Webinar Organizer Team'
-
+        # Wrap webinar description text
+        max_chars_per_line = 60  # Adjust as needed
+        wrapped_webinar_details = wrap_text(Webinar, max_chars_per_line)
+       
+        
         # Create PDF in memory
         buffer = BytesIO()
         pdf = canvas.Canvas(buffer, pagesize=letter)
         width, height = letter
-
-        # Set the title of the document
-        pdf.setTitle(documentTitle)
-
+        
         # Add border around the page
         pdf.rect(20, 20, width - 40, height - 40, stroke=1, fill=0)
+        
+        # Add centered diagonal shadow text "HCProfs" in the background
+        pdf.setFont("Helvetica-Bold", 80)
+        pdf.setFillColorRGB(0.9, 0.9, 0.9)  # Light gray color for the shadow text
+        pdf.saveState()
+        pdf.translate(width / 2, height / 2)
+        pdf.rotate(45)  # Rotate text diagonally at the center
+        pdf.drawCentredString(0, 0, "HCProfs")
+        pdf.restoreState()
 
+        
+        # Reset fill color for normal text
+        pdf.setFillColor(colors.black)
+        
         # Shift all content downward
         y_shift = 40  # Shift content down by 40 units
-
+        
         # Document Title at the top
         pdf.setFont('Helvetica-Bold', 18)
         pdf.drawCentredString(width / 2, height - 40 - y_shift, documentTitle)
-
-        # Create the title by setting its font and putting it on the canvas
-        pdf.setFont('Helvetica-Bold', 14)
+        
+        # Create the title
+        pdf.setFont('Helvetica-Bold', 16)
         pdf.drawCentredString(width / 2, height - 80 - y_shift, title)
-
+        
         # First section - Invoice details
-        pdf.setFont("Helvetica-Bold", 10)
+        pdf.setFont("Helvetica-Bold", 12)
         text = pdf.beginText(40, height - 120 - y_shift)
         for line in leftSection:
             text.textLine(line)
         pdf.drawText(text)
-
-        text = pdf.beginText(width - 250, height - 120 - y_shift)
-        for line in rightSection:
+        
+        text = pdf.beginText(width - 180, height - 120 - y_shift)
+        text.setFont("Helvetica-Bold", 10)
+        for line in rightSection1:
             text.textLine(line)
         pdf.drawText(text)
-
+        
         # Line separator for the second section
-        pdf.line(40, height - 160 - y_shift, width - 40, height - 160 - y_shift)
-
+        pdf.line(40, height - 180 - y_shift, width - 40, height - 180 - y_shift)
+        
         # Second section - Customer details
-        text = pdf.beginText(40, height - 180 - y_shift)
-        text.setFont("Helvetica-Bold", 10)
+        text = pdf.beginText(40, height - 200 - y_shift)
+        text.setFont("Helvetica-Bold", 14)
         text.textLine(customerDetails[0])  # Customer Details heading
-        text.setFont("Helvetica", 14)  # Change font for the rest of the text
+        text.setFont("Helvetica", 12)  # Change font for the rest of the text
         text.moveCursor(0, 20)  # Add space after the heading
-
+        
         for line in customerDetails[1:]:
             text.textLine(line)
             text.moveCursor(0, 15)  # Add space between lines to avoid overwriting
         pdf.drawText(text)
-
+        
         # Line separator for the third section
         pdf.line(40, height - 340 - y_shift, width - 40, height - 340 - y_shift)
-
+        
         # Third section - Webinar details
         text = pdf.beginText(40, height - 360 - y_shift)
-        text.setFont("Helvetica-Bold", 10)
-        for line in webinarDetails:
+        text.setFont("Helvetica-Bold", 12)
+        text.textLine(webinarDetails[0])  # Title
+
+        for line in wrapped_webinar_details:
             text.textLine(line)
         pdf.drawText(text)
+        
+        text = pdf.beginText(width - 180, height - 360 - y_shift)
+        text.setFont("Helvetica-Bold", 12)
+        for line in rightSection2:
+            text.textLine(line)
+        pdf.drawText(text)
+        
+        text = pdf.beginText(width - 180, height - 460 - y_shift)
+        text.setFont("Helvetica-Bold", 12)
+        for line in rightSection3:
+            text.textLine(line)
+        pdf.drawText(text)
+        
+        # Add the thank you note and signature at the bottom of the page
+        pdf.setFont("Helvetica-Oblique", 12)
+        pdf.setFillColor(colors.black)
+        pdf.drawCentredString(width / 2, 120, thankYouNote)
+        pdf.drawCentredString(width / 2, 80, signature)
 
         # Add the thank you note and signature at the bottom of the page
-        pdf.setFont("Helvetica-Oblique", 8)
+        thankYouNote = 'Query? Reach out to us at cs@hcprofs.com !'
+        signature = 'Webinar Organizer Team'
+        pdf.setFont("Helvetica-Oblique", 12)
         pdf.setFillColor(colors.black)
-        pdf.drawCentredString(width / 2, 80, thankYouNote)
-        pdf.drawCentredString(width / 2, 60, signature)
+        pdf.drawCentredString(width / 2, 120, thankYouNote)
+        pdf.drawCentredString(width / 2, 80, signature)
         
         # Add the website URL at the bottom-most position
-        pdf.setFont("Helvetica", 8)
-        pdf.drawCentredString(width / 2, 40, f'Website - {websiteUrl}')
-
+        pdf.setFont("Helvetica", 12)
+        pdf.drawCentredString(width / 2, 60, f'Website - {websiteUrl}')
+        
         # Save the PDF to the in-memory buffer
         pdf.save()
         buffer.seek(0)
