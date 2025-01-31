@@ -47,7 +47,7 @@ def create_payment_intent():
             customer=customer.id,
             amount = data['amount']*100,
             currency='inr',
-            description=data['invoice_number']
+            description='hcprofs'
         )
         created_time = datetime.datetime.fromtimestamp(customer['created']).astimezone()
         return jsonify({'success': True, 'amount': data['amount'], 'date_time':created_time})
