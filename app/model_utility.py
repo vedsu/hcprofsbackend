@@ -297,10 +297,10 @@ class Utility():
         pdf.drawText(text)
         
         # Add the thank you note and signature at the bottom of the page
-        pdf.setFont("Helvetica-Oblique", 12)
-        pdf.setFillColor(colors.black)
-        pdf.drawCentredString(width / 2, 120, thankYouNote)
-        pdf.drawCentredString(width / 2, 80, signature)
+        # pdf.setFont("Helvetica-Oblique", 12)
+        # pdf.setFillColor(colors.black)
+        # pdf.drawCentredString(width / 2, 120, thankYouNote)
+        # pdf.drawCentredString(width / 2, 80, signature)
 
         # Add the thank you note and signature at the bottom of the page
         thankYouNote = 'Query? Reach out to us at cs@hcprofs.com !'
