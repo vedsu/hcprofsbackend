@@ -502,6 +502,9 @@ def order():
         current_time_ist = None
         invoice_number = None
         country = None
+        zip_code = None #updated 26.02.25
+        discount = 0 # 26.02.25
+        total_price = 0 # 26.02.25
         customername = None
         billingemail = None
         session = []
@@ -526,33 +529,36 @@ def order():
     
             sessionLive =  request.form.get("sessionLive") #True /False
             priceLive = request.form.get('priceLive')
-            
             if sessionLive == "true":
+                total_price += priceLive #26.02.25
                 session.append({"Live": priceLive})
+            
             sessionRecording = request.form.get("sessionRecording") # True/ False
             priceRecording = request.form.get('priceRecording')
-            
             if sessionRecording == "true":
+                total_price += priceRecording #26.02.25
                 session.append({"Recording": priceRecording})
+            
             sessionDigitalDownload = request.form.get('sessionDigitalDownload') # True or False
             priceDigitalDownload =  request.form.get('priceDigitalDownload')
-            
             if sessionDigitalDownload == "true":
+                total_price += priceDigitalDownload #26.02.25
                 session.append({"DigitalDownload": priceDigitalDownload})
+            
             sessionTranscript = request.form.get("sessionTranscript") # True or False
             priceTranscript = request.form.get('priceTranscript')
-            
             if sessionTranscript == "true":
                 session.append({"Transcript":priceTranscript})
             
             # Extract keys and store them as a comma-separated string
             keys = [list(item.keys())[0] for item in session]
             comma_separated_keys = ', '.join(keys)
-            
+            discount = total_price - orderamount 
             if paymentstatus == "purchased":
                 billingemail = request.form.get("billingemail")
                 customername = request.form.get("customername")
                 country =  request.form.get("country")
+                # zip_code = request.form.get("zipcode") #26.02.2025
                 
                 order_datetimezone = request.form.get("order_datetimezone")
                 date_time_str = order_datetimezone
@@ -592,13 +598,16 @@ def order():
                 
     
                 # document = Utility.generate_pdf(Webinar, customername, country, websiteUrl, billingemail, date_time_str, orderamount, invoice_number)
-                document = Utility.generate_pdf(Webinar, customername, country, websiteUrl, billingemail, order_datetime_str, orderamount, invoice_number)
-                document_ist = Utility.generatelocal_pdf(Webinar, customername, country, websiteUrl, billingemail, current_time_ist, orderamount, invoice_number)
+                # document = Utility.generate_pdf(Webinar, customername, country, websiteUrl, billingemail, order_datetime_str, orderamount, invoice_number)
+                # document_ist = Utility.generatelocal_pdf(Webinar, customername, country, websiteUrl, billingemail, current_time_ist, orderamount, invoice_number)
+                document = Utility.generate_pdf(Webinar, customername, country, websiteUrl, billingemail, order_datetime_str, orderamount, invoice_number, discount, zip_code, id)
+                document_ist = Utility.generatelocal_pdf(Webinar, customername, country, websiteUrl, billingemail, current_time_ist, orderamount, invoice_number, discount, zip_code, id)
+                
             
             else:
                 
                 document = ""
-            
+                document_ist = "" #26.02.25
             order_data = {
                 "id":id,
                 "topic": Webinar,
