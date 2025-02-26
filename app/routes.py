@@ -281,6 +281,9 @@ def corporateorder():
         current_time_ist = None
         invoice_number = None
         country = None
+        zip_code = None #updated 26.02.25
+        discount = 0 # 26.02.25
+        total_price = 0 # 26.02.25
         customername = None
         billingemail = None
         attendees = None
@@ -311,29 +314,28 @@ def corporateorder():
             quantityLive = request.form.get('quantityLive') # Default 0
             if sessionLive == "true":
                 total_attendee+=int(quantityLive)
+                total_price += int(priceLive) #26.02.25
                 session.append({"Live": priceLive})
             
             sessionRecording = request.form.get("sessionRecording") # True/ False
             priceRecording = request.form.get('priceRecording')
             quantityRecording = request.form.get('quantityRecording') # Default 0
-            
-            
             if sessionRecording == "true":
+                total_price += int(priceRecording) #26.02.25
                 total_attendee+=int(quantityRecording)
                 session.append({"Recording": priceRecording})
             
             sessionDigitalDownload = request.form.get('sessionDigitalDownload') # True or False
             priceDigitalDownload =  request.form.get('priceDigitalDownload')
             quantityDigitalDownload = request.form.get('quantityDigitalDownload') # Default 0
-            
             if sessionDigitalDownload == "true":
+                total_price += int(priceDigitalDownload) #26.02.25
                 total_attendee+=int(quantityDigitalDownload)
                 session.append({"DigitalDownload": priceDigitalDownload})
             
             sessionTranscript = request.form.get("sessionTranscript") # True or False
             priceTranscript = request.form.get('priceTranscript')
             quantityTranscript = request.form.get('quantityTranscript') # Default 0
-            
             if sessionTranscript == "true":
                 total_attendee+=int(quantityTranscript)
                 session.append({"Transcript":priceTranscript})
@@ -347,6 +349,7 @@ def corporateorder():
                 customername = request.form.get("customername")
                 country =  request.form.get("country")
                 attendees = request.form.get("attendees") #for corporate purchase
+                # zip_code = request.form.get("zipcode") #26.02.2025
                 # total_attendee = request.form.get("total_attendee") # for corporate purchase that is sum of quantity of all webinars quantity
                 
                 order_datetimezone = request.form.get("order_datetimezone")
@@ -387,12 +390,13 @@ def corporateorder():
                 
     
                 # document = Utility.generate_pdf(Webinar, customername, country, websiteUrl, billingemail, date_time_str, orderamount, invoice_number)
-                document = Utility.generate_pdf(Webinar, customername, country, websiteUrl, billingemail, order_datetime_str, orderamount, invoice_number)
-                document_ist = Utility.generatelocal_pdf(Webinar, customername, country, websiteUrl, billingemail, current_time_ist, orderamount, invoice_number)
+                document = Utility.generate_pdf(Webinar, customername, country, websiteUrl, billingemail, order_datetime_str, orderamount, invoice_number, discount, zip_code, id)
+                document_ist = Utility.generatelocal_pdf(Webinar, customername, country, websiteUrl, billingemail, current_time_ist, orderamount, invoice_number, discount, zip_code, id)
             
             else:
                 
                 document = ""
+                document_ist ="" #26.02.25
             
             order_data = {
                 "id":id,
@@ -530,19 +534,19 @@ def order():
             sessionLive =  request.form.get("sessionLive") #True /False
             priceLive = request.form.get('priceLive')
             if sessionLive == "true":
-                total_price += priceLive #26.02.25
+                total_price += int(priceLive) #26.02.25
                 session.append({"Live": priceLive})
             
             sessionRecording = request.form.get("sessionRecording") # True/ False
             priceRecording = request.form.get('priceRecording')
             if sessionRecording == "true":
-                total_price += priceRecording #26.02.25
+                total_price += int(priceRecording) #26.02.25
                 session.append({"Recording": priceRecording})
             
             sessionDigitalDownload = request.form.get('sessionDigitalDownload') # True or False
             priceDigitalDownload =  request.form.get('priceDigitalDownload')
             if sessionDigitalDownload == "true":
-                total_price += priceDigitalDownload #26.02.25
+                total_price += int(priceDigitalDownload) #26.02.25
                 session.append({"DigitalDownload": priceDigitalDownload})
             
             sessionTranscript = request.form.get("sessionTranscript") # True or False
@@ -702,11 +706,11 @@ def newsletter_order():
         paymentstatus = None
         current_time_ist = None
         invoice_number = None
-        # country = None
-        zip_code = None #updated 26.02.25
+        
+        zip_code = "N/A" #updated 26.02.25
         discount = 0 # 26.02.25
         total_price = 0 # 26.02.25
-        # customername = None
+       
         billingemail = None
         customeremail  = None
         country = "N/A"
@@ -728,23 +732,25 @@ def newsletter_order():
             paymentstatus = request.form.get("paymentstatus")
             newsletter = request.form.get("topic")
             orderamount =  request.form.get("orderamount")
-            # try:
-            #     price = mongo.db.newsletter_data.find_one({"topic": newsletter}, {"price": 1, "_id": 0})
-            #     # Extract the 'price' value and convert to int
-            #     price_value = int(price["price"]) if price and "price" in price else 0
-            #     discount = price_value
-            # except:
-            #     discount = 0
+            try:
+                newsletter_data = list(mongo.db.newsletter_data.find({"topic": newsletter},{"price": 1, "_id": 0}))
+                newsletter = newsletter_data[0]
+                price = newsletter.get("price")
+                # price = mongo.db.newsletter_data.find_one({"topic": newsletter}, {"price": 1, "_id": 0})
+                # Extract the 'price' value and convert to int
+                # price_value = int(price["price"]) if price and "price" in price else 0
+                discount = int(price_value)
+            except:
+                discount = 0
                 
             
             if paymentstatus == "purchased":
                 billingemail = request.form.get("billingemail")
-                if int(orderamount) == 0:
-                    country = "N/A"
-                    customername = "N/A"
-                else:
+                if int(orderamount) != 0:
+                    
                     customername = request.form.get("customername")
                     country =  request.form.get("country")
+                
                 
                 order_datetimezone = request.form.get("order_datetimezone")
                 date_time_str = order_datetimezone
@@ -772,8 +778,8 @@ def newsletter_order():
                     order_datetime_str = f"{orderdate} {ordertime} EST"
                     current_time_ist = ist_datetime
                 except:
-                    country = "N/A"
-                    customername = "N/A"
+                    # country = "N/A"
+                    # customername = "N/A"
                     # Date string from frontend
                     date_time_format = "2024-11-13T07:20:16.033Z"
                     # Remove the `GMT` and timezone name from the string
