@@ -165,7 +165,7 @@ class Utility():
         text = pdf.beginText(width - 180, height - 340 - y_shift)
         text.setFont("Helvetica-Bold", 11)
         text.textLine('Total Price')
-        text.textLine(f'${orderamount + discount}')
+        text.textLine(f'${total_price}')
         pdf.drawText(text)
 
         text = pdf.beginText(width - 180, height - 420 - y_shift)
@@ -314,7 +314,7 @@ class Utility():
         text = pdf.beginText(width - 180, height - 340 - y_shift)
         text.setFont("Helvetica-Bold", 11)
         text.textLine('Total Price')
-        text.textLine(f'${orderamount + discount}')
+        text.textLine(f'${total_price}')
         pdf.drawText(text)
 
         text = pdf.beginText(width - 180, height - 420 - y_shift)
