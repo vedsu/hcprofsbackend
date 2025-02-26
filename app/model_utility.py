@@ -95,7 +95,7 @@ class Utility():
         ]
     
         orderDetails = [
-        f'#: {orderID}'
+        f'#{orderID}'
         ]
     
         webinarDetails = [
@@ -244,7 +244,7 @@ class Utility():
         ]
     
         orderDetails = [
-        f'#: {orderID}'
+        f'#{orderID}'
         ]
     
         webinarDetails = [
