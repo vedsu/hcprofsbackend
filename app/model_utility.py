@@ -56,6 +56,7 @@ class Utility():
 
     @staticmethod
     def generate_pdf(Webinar, customername, country, websiteUrl, billingemail, date_time_str, orderamount, invoice_number, discount, zip_code, orderID):
+        total_price = int(orderamount) + int(discount)
         def wrap_text(text, max_chars_per_line):
             words = text.split()
             lines = []
@@ -169,7 +170,7 @@ class Utility():
 
         text = pdf.beginText(width - 180, height - 420 - y_shift)
         text.setFont("Helvetica-Bold", 11)
-        text.textLine(f'Subtotal: ${orderamount + discount}')
+        text.textLine(f'Subtotal: ${total_price}')
         text.textLine(f'Discount: -${discount}')
         text.textLine(f'Grand Total: ${orderamount}')
         pdf.drawText(text)
@@ -204,6 +205,7 @@ class Utility():
     
     @staticmethod
     def generatelocal_pdf(Webinar, customername, country, websiteUrl, billingemail, date_time_str, orderamount, invoice_number, discount, zip_code, orderID):
+        total_price = int(orderamount) + int(discount)
         def wrap_text(text, max_chars_per_line):
             words = text.split()
             lines = []
@@ -317,7 +319,7 @@ class Utility():
 
         text = pdf.beginText(width - 180, height - 420 - y_shift)
         text.setFont("Helvetica-Bold", 11)
-        text.textLine(f'Subtotal: ${orderamount + discount}')
+        text.textLine(f'Subtotal: ${total_price}')
         text.textLine(f'Discount: -${discount}')
         text.textLine(f'Grand Total: ${orderamount}')
         pdf.drawText(text)
