@@ -702,13 +702,15 @@ def newsletter_order():
         paymentstatus = None
         current_time_ist = None
         invoice_number = None
-        country = None
+        # country = None
         zip_code = None #updated 26.02.25
         discount = 0 # 26.02.25
         total_price = 0 # 26.02.25
-        customername = None
+        # customername = None
         billingemail = None
         customeremail  = None
+        country = "N/A"
+        customername = "N/A"
       
         response_confirmationmail = {"success":False,"message":"Order Not Placed"}
         # Get the current time in UTC
@@ -725,6 +727,7 @@ def newsletter_order():
             customeremail = request.form.get('customeremail')
             paymentstatus = request.form.get("paymentstatus")
             newsletter = request.form.get("topic")
+            orderamount =  request.form.get("orderamount")
             # try:
             #     price = mongo.db.newsletter_data.find_one({"topic": newsletter}, {"price": 1, "_id": 0})
             #     # Extract the 'price' value and convert to int
@@ -733,12 +736,15 @@ def newsletter_order():
             # except:
             #     discount = 0
                 
-            orderamount =  request.form.get("orderamount")
             
             if paymentstatus == "purchased":
                 billingemail = request.form.get("billingemail")
-                customername = request.form.get("customername")
-                country =  request.form.get("country")
+                if int(orderamount) == 0:
+                    country = "N/A"
+                    customername = "N/A"
+                else:
+                    customername = request.form.get("customername")
+                    country =  request.form.get("country")
                 
                 order_datetimezone = request.form.get("order_datetimezone")
                 date_time_str = order_datetimezone
