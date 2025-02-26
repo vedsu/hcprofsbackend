@@ -726,7 +726,7 @@ def newsletter_order():
             paymentstatus = request.form.get("paymentstatus")
             newsletter = request.form.get("topic")
             try:
-                price = mongo.db.newsletter_data.find_one({"topic": topic}, {"price": 1, "_id": 0})
+                price = mongo.db.newsletter_data.find_one({"topic": newsletter}, {"price": 1, "_id": 0})
                 # Extract the 'price' value and convert to int
                 price_value = int(price["price"]) if price and "price" in price else 0
                 discount = price_value
