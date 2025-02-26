@@ -117,7 +117,7 @@ class Utility():
         pdf.restoreState()
         pdf.setFillColor(colors.black)
 
-         y_shift = 50
+        y_shift = 50
 
         pdf.setFont('Helvetica-Bold', 17)
         pdf.drawCentredString(width / 2, height - 40 - y_shift, documentTitle)
@@ -265,7 +265,7 @@ class Utility():
         pdf.restoreState()
         pdf.setFillColor(colors.black)
 
-         y_shift = 50
+        y_shift = 50
 
         pdf.setFont('Helvetica-Bold', 17)
         pdf.drawCentredString(width / 2, height - 40 - y_shift, documentTitle)
