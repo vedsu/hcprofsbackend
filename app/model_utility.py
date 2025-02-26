@@ -88,7 +88,7 @@ class Utility():
         customerDetails = [
         'Recipient Details:',
         f'Name : {customername}',
-        f'Email : {customeremail}',
+        f'Email : {billingemail}',
         f'Country : {country}'
         f'Zip Code : {zip_code}'
         ]
@@ -236,7 +236,7 @@ class Utility():
         customerDetails = [
         'Recipient Details:',
         f'Name : {customername}',
-        f'Email : {customeremail}',
+        f'Email : {billingemail}',
         f'Country : {country}'
         f'Zip Code : {zip_code}'
         ]
