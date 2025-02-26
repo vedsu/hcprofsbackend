@@ -343,7 +343,7 @@ def corporateorder():
             # Extract keys and store them as a comma-separated string
             keys = [list(item.keys())[0] for item in session]
             comma_separated_keys = ', '.join(keys)
-            
+            discount = int(total_price) - int(orderamount) #26.02.25
             if paymentstatus == "purchased":
                 billingemail = request.form.get("billingemail")
                 customername = request.form.get("customername")
@@ -557,7 +557,7 @@ def order():
             # Extract keys and store them as a comma-separated string
             keys = [list(item.keys())[0] for item in session]
             comma_separated_keys = ', '.join(keys)
-            discount = total_price - orderamount 
+            discount = int(total_price) - int(orderamount) #26.02.25
             if paymentstatus == "purchased":
                 billingemail = request.form.get("billingemail")
                 customername = request.form.get("customername")
@@ -735,11 +735,11 @@ def newsletter_order():
             try:
                 newsletter_data = list(mongo.db.newsletter_data.find({"topic": newsletter},{"price": 1, "_id": 0}))
                 newsletter = newsletter_data[0]
-                price = newsletter.get("price")
+                price_value = newsletter.get("price")
+                discount = int(price_value) - int(orderamount)
                 # price = mongo.db.newsletter_data.find_one({"topic": newsletter}, {"price": 1, "_id": 0})
                 # Extract the 'price' value and convert to int
                 # price_value = int(price["price"]) if price and "price" in price else 0
-                discount = int(price_value)
             except:
                 discount = 0
                 
