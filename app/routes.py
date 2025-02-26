@@ -708,6 +708,7 @@ def newsletter_order():
         total_price = 0 # 26.02.25
         customername = None
         billingemail = None
+        customeremail  = None
       
         response_confirmationmail = {"success":False,"message":"Order Not Placed"}
         # Get the current time in UTC
