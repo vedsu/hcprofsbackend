@@ -90,7 +90,7 @@ class Utility():
         'Recipient Details:',
         f'Name : {customername}',
         f'Email : {billingemail}',
-        f'Country : {country}'
+        f'Country : {country}',
         f'Zip Code : {zip_code}'
         ]
     
@@ -170,9 +170,9 @@ class Utility():
 
         text = pdf.beginText(width - 180, height - 420 - y_shift)
         text.setFont("Helvetica-Bold", 11)
-        text.textLine(f'Subtotal: ${total_price}')
-        text.textLine(f'Discount: -${discount}')
-        text.textLine(f'Grand Total: ${orderamount}')
+        text.textLine(f'Subtotal: ${int(total_price)}')
+        text.textLine(f'Discount: -${int(discount)}')
+        text.textLine(f'Grand Total: ${int(orderamount)}')
         pdf.drawText(text)
 
         thankYouNote = 'Thank you for your Purchase'
@@ -239,7 +239,7 @@ class Utility():
         'Recipient Details:',
         f'Name : {customername}',
         f'Email : {billingemail}',
-        f'Country : {country}'
+        f'Country : {country}',
         f'Zip Code : {zip_code}'
         ]
     
@@ -319,9 +319,9 @@ class Utility():
 
         text = pdf.beginText(width - 180, height - 420 - y_shift)
         text.setFont("Helvetica-Bold", 11)
-        text.textLine(f'Subtotal: ${total_price}')
-        text.textLine(f'Discount: -${discount}')
-        text.textLine(f'Grand Total: ${orderamount}')
+        text.textLine(f'Subtotal: ${int(total_price)}')
+        text.textLine(f'Discount: -${int(discount)}')
+        text.textLine(f'Grand Total: ${int(orderamount)}')
         pdf.drawText(text)
 
         thankYouNote = 'Thank you for your Purchase'
