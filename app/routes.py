@@ -703,6 +703,9 @@ def newsletter_order():
         current_time_ist = None
         invoice_number = None
         country = None
+        zip_code = None #updated 26.02.25
+        discount = 0 # 26.02.25
+        total_price = 0 # 26.02.25
         customername = None
         billingemail = None
       
@@ -721,6 +724,14 @@ def newsletter_order():
             customeremail = request.form.get('customeremail')
             paymentstatus = request.form.get("paymentstatus")
             newsletter = request.form.get("topic")
+            try:
+                price = mongo.db.newsletter_data.find_one({"topic": topic}, {"price": 1, "_id": 0})
+                # Extract the 'price' value and convert to int
+                price_value = int(price["price"]) if price and "price" in price else 0
+                discount = price_value
+            except:
+                discount = 0
+                
             orderamount =  request.form.get("orderamount")
             
             if paymentstatus == "purchased":
@@ -795,12 +806,13 @@ def newsletter_order():
                 
     
                 # document = Utility.generate_pdf(newsletter, customername, country, websiteUrl, billingemail, date_time_str, orderamount, invoice_number)
-                document = Utility.generate_pdf(newsletter, customername, country, websiteUrl, billingemail, order_datetime_str, orderamount, invoice_number)
-                document_ist = Utility.generatelocal_pdf(newsletter, customername, country, websiteUrl, billingemail, current_time_ist, orderamount, invoice_number)
+                document = Utility.generate_pdf(newsletter, customername, country, websiteUrl, billingemail, order_datetime_str, orderamount, invoice_number, discount, zip_code, id)
+                document_ist = Utility.generatelocal_pdf(newsletter, customername, country, websiteUrl, billingemail, current_time_ist, orderamount, invoice_number, discount, zip_code, id)
             
             else:
                 
                 document = ""
+                document_ist = ""
             
             order_data = {
                 "id":id,
@@ -813,6 +825,7 @@ def newsletter_order():
                 "customername": customername,
                 "billingemail": billingemail,
                 "orderamount": orderamount,
+                "discount": discount,
                 "country": country,
                 "website": website , # Current Website
                 "document" : document,
