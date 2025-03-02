@@ -349,7 +349,7 @@ def corporateorder():
                 customername = request.form.get("customername")
                 country =  request.form.get("country")
                 attendees = request.form.get("attendees") #for corporate purchase
-                # zip_code = request.form.get("zipcode") #26.02.2025
+                zip_code = request.form.get("zipcode") #26.02.2025
                 # total_attendee = request.form.get("total_attendee") # for corporate purchase that is sum of quantity of all webinars quantity
                 
                 order_datetimezone = request.form.get("order_datetimezone")
@@ -562,7 +562,7 @@ def order():
                 billingemail = request.form.get("billingemail")
                 customername = request.form.get("customername")
                 country =  request.form.get("country")
-                # zip_code = request.form.get("zipcode") #26.02.2025
+                zip_code = request.form.get("zipcode") #26.02.2025
                 
                 order_datetimezone = request.form.get("order_datetimezone")
                 date_time_str = order_datetimezone
@@ -750,6 +750,7 @@ def newsletter_order():
                     
                     customername = request.form.get("customername")
                     country =  request.form.get("country")
+                    zip_code = request.form.get("zipcode") #26.02.2025
                 
                 
                 order_datetimezone = request.form.get("order_datetimezone")
