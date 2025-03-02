@@ -436,6 +436,7 @@ def corporateorder():
                 "invoice_number" : invoice_number,
                 "total_attendee":total_attendee,
                 "order_type":"corporate",
+                "zip_code":zip_code
                 
                 }
             
@@ -640,7 +641,8 @@ def order():
                 "document_ist":document_ist,
                 "ist_time" : current_time_ist,
                 "invoice_number" : invoice_number,
-                "order_type":"individual"
+                "order_type":"individual",
+                "zip_code":zip_code
                 }
             
     
@@ -847,6 +849,7 @@ def newsletter_order():
                 "ist_time" : current_time_ist,
                 "invoice_number" : invoice_number,
                 "order_type":"newsletter",
+                "zip_code":zip_code,
                 }
             
             # for newsletter login component needs to be updated
