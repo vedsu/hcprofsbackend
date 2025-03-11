@@ -738,7 +738,7 @@ def newsletter_order():
             if paymentstatus == "purchased":
                 billingemail = request.form.get("billingemail")
                 if int(orderamount) != 0:
-                    # try:
+                    try:
                     #     newsletter_data = list(mongo.db.newsletter_data.find({"topic": newsletter},{"price": 1, "_id": 0}))
                     #     newsletter = newsletter_data[0]
                     #     price_value = newsletter.get("price")
@@ -747,11 +747,10 @@ def newsletter_order():
                     #     # Extract the 'price' value and convert to int
                     #     # price_value = int(price["price"]) if price and "price" in price else 0
                       newsletter_data = mongo.db.newsletter_data.find_one({"topic": newsletter}, {"price": 1, "_id": 0})
-
-                        if newsletter_data:  # Ensure it's not None
+                      if newsletter_data:  # Ensure it's not None
                             price_value = newsletter_data.get("price", 0)
                             discount = int(price_value) - int(orderamount)
-                        else:
+                      else:
                             discount = 0
                     except:
                         discount = 0
