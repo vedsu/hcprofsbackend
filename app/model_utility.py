@@ -191,7 +191,7 @@ class Utility():
         buffer.seek(0)
 
         # Upload the PDF to S3
-        bucket_name = "webinarprofs"
+        bucket_name = "webinarprof"
         object_key = f'websiteorderist/{invoice_number}.pdf'
         s3_client.put_object(
             Body=buffer,
@@ -340,7 +340,7 @@ class Utility():
         buffer.seek(0)
 
         # Upload the PDF to S3
-        bucket_name = "webinarprofs"
+        bucket_name = "webinarprof"
         object_key = f'websiteorder/{invoice_number}.pdf'
         s3_client.put_object(
             Body=buffer,
@@ -625,7 +625,7 @@ class Utility():
     #     buffer.seek(0)
 
     #     # Upload the PDF to S3
-    #     bucket_name = "webinarprofs"
+    #     bucket_name = "webinarprof"
     #     object_key = f'websiteorderist/{invoice_number}.pdf'
     #     s3_client.put_object(
     #         Body=buffer,
@@ -740,7 +740,7 @@ class Utility():
     #     buffer.seek(0)
 
     #     # Upload the PDF to S3
-    #     bucket_name = "webinarprofs"
+    #     bucket_name = "webinarprof"
     #     object_key = f'websiteorder/{invoice_number}.pdf'
     #     s3_client.put_object(
     #         Body=buffer,
