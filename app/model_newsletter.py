@@ -49,7 +49,8 @@ class Newsletter():
     def activelist_newsletter():
         newsletter_list = []
         try:
-            newsletter_data = list(mongo.db.newsletter_data.find({"status":"Active"}).sort({"published_date":-1}))
+            # newsletter_data = list(mongo.db.newsletter_data.find({"status":"Active"}).sort({"published_date":-1}))
+            newsletter_data = list(mongo.db.newsletter_data.find({"$and":[{"website":"HEALTHPROFS"},{"status":"Active"}]}).sort({"published_date":-1}))
             for newsletter in newsletter_data:
                 newsletter_dict ={
                     "id":newsletter.get("id"),
